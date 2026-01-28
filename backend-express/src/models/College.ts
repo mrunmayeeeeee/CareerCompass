@@ -10,3 +10,5 @@ const CollegeSchema = new Schema({
     cutoff: { type: String } // [cite: 124]
   }]
 });
+
+export default mongoose.model('College', CollegeSchema);

@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const CareerSchema = new Schema({
+const Career = new Schema({
   careerTitle: { type: String, required: true }, // [cite: 257]
   jobDescription: { type: String }, // [cite: 257]
   averageSalary: { type: String }, // [cite: 118]
@@ -15,3 +15,5 @@ const CareerSchema = new Schema({
     isFree: { type: Boolean, default: true } // [cite: 17, 137]
   }]
 });
+
+export default Career;
