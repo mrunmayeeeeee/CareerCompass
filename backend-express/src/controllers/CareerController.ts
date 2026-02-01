@@ -15,7 +15,7 @@ export class CareerController {
 
   async getCareerById(req: Request, res: Response) {
     try {
-      const careerId = req.params.id;
+      const careerId = req.params.id as string;
       const career = await careerService.getCareerDetails(careerId);
       res.json(career);
     } catch (error: any) {
@@ -25,7 +25,7 @@ export class CareerController {
 
   async getCareerRoadmap(req: Request, res: Response) {
     try {
-      const careerId = req.params.id;
+      const careerId = req.params.id as string;
       const roadmap = await careerService.getCareerRoadmap(careerId);
       res.json(roadmap);
     } catch (error: any) {
@@ -35,7 +35,7 @@ export class CareerController {
 
   async getFreeResources(req: Request, res: Response) {
     try {
-      const careerId = req.params.id;
+      const careerId = req.params.id as string;
       const resources = await careerService.getFreeResources(careerId);
       res.json(resources);
     } catch (error: any) {

@@ -15,7 +15,7 @@ export class CollegeController {
 
   async getCollegeById(req: Request, res: Response) {
     try {
-      const collegeId = req.params.id;
+      const collegeId = req.params.id as string;
       const college = await collegeService.getCollegeDetails(collegeId);
       res.json(college);
     } catch (error: any) {
@@ -25,7 +25,7 @@ export class CollegeController {
 
   async getCollegesByCourse(req: Request, res: Response) {
     try {
-      const courseId = req.params.courseId;
+      const courseId = req.params.courseId as string;
       const colleges = await collegeService.getCollegesByCourse(courseId);
       res.json(colleges);
     } catch (error: any) {

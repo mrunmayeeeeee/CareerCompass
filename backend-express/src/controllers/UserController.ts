@@ -24,7 +24,7 @@ export class UserController {
 
   async getProfile(req: Request, res: Response) {
     try {
-      const userId = req.params.id;
+      const userId = req.params.id as string;
       const user = await userService.getUserProfile(userId);
       res.json({
         id: user._id,
@@ -40,9 +40,12 @@ export class UserController {
 
   async updatePreferences(req: Request, res: Response) {
     try {
-      const userId = req.params.id;
+      const userId = req.params.id as string;
       const preferences = req.body;
       const user = await userService.updatePreferences(userId, preferences);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
       res.json({
         message: 'Preferences updated successfully',
         user: {

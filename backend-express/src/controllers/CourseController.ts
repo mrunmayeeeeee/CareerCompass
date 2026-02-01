@@ -6,7 +6,7 @@ const courseService = new CourseService();
 export class CourseController {
   async getCoursesByStream(req: Request, res: Response) {
     try {
-      const stream = req.params.stream;
+      const stream = req.params.stream as string;
       const courses = await courseService.getCoursesByStream(stream);
       res.json(courses);
     } catch (error: any) {
@@ -16,7 +16,7 @@ export class CourseController {
 
   async getCourseById(req: Request, res: Response) {
     try {
-      const courseId = req.params.id;
+      const courseId = req.params.id as string;
       const course = await courseService.getCourseDetails(courseId);
       res.json(course);
     } catch (error: any) {
