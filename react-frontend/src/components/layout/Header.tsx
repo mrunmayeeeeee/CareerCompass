@@ -1,30 +1,30 @@
 const Header = () => {
   return (
-    <header className="flex justify-between items-center px-6 py-3 bg-[#00529b] text-white shadow-lg h-20">
+    <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px', backgroundColor: '#00529b', color: 'white', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', height: '80px'}}>
       {/* Left Side: Logo - White and 24px */}
-      <div className="text-[24px] font-bold text-white tracking-tight">
+      <div style={{fontSize: '24px', fontWeight: 'bold', color: 'white', letterSpacing: '-0.025em'}}>
         Z-CareerCompass
       </div>
 
       {/* Right Side: Container for Nav and Button */}
-      <div className="flex items-center gap-x-12">
+      <div style={{display: 'flex', alignItems: 'center', gap: '48px'}}>
         {/* Navigation Links - 12px and Yellow */}
         <nav>
-          <ul className="flex flex-row items-center gap-x-8 list-none m-0 p-0">
-            <li className="text-[#ffcb05] text-[12px] font-bold hover:text-white cursor-pointer transition-colors uppercase tracking-wider">
+          <ul style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '32px', listStyle: 'none', margin: 0, padding: 0}}>
+            <li style={{color: '#ffcb05', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'color 0.15s ease-in-out', textTransform: 'uppercase', letterSpacing: '0.05em'}} onMouseEnter={(e) => e.currentTarget.style.color = 'white'} onMouseLeave={(e) => e.currentTarget.style.color = '#ffcb05'}>
               Explore
             </li>
-            <li className="text-[#ffcb05] text-[12px] font-bold hover:text-white cursor-pointer transition-colors uppercase tracking-wider">
+            <li style={{color: '#ffcb05', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'color 0.15s ease-in-out', textTransform: 'uppercase', letterSpacing: '0.05em'}} onMouseEnter={(e) => e.currentTarget.style.color = 'white'} onMouseLeave={(e) => e.currentTarget.style.color = '#ffcb05'}>
               About
             </li>
-            <li className="text-[#ffcb05] text-[12px] font-bold hover:text-white cursor-pointer transition-colors uppercase tracking-wider">
+            <li style={{color: '#ffcb05', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', transition: 'color 0.15s ease-in-out', textTransform: 'uppercase', letterSpacing: '0.05em'}} onMouseEnter={(e) => e.currentTarget.style.color = 'white'} onMouseLeave={(e) => e.currentTarget.style.color = '#ffcb05'}>
               Home
             </li>
           </ul>
         </nav>
 
         {/* Action Button */}
-        <button className="bg-[#ffcb05] text-[#00529b] px-6 py-2 rounded font-black hover:bg-yellow-400 transition-all uppercase text-xs border-b-4 border-yellow-700 active:border-b-0">
+        <button style={{backgroundColor: '#ffcb05', color: '#00529b', padding: '8px 24px', borderRadius: '4px', fontWeight: '900', textTransform: 'uppercase', fontSize: '12px', borderBottom: '4px solid #b59104', transition: 'all 0.15s ease-in-out'}} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffed4e'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffcb05'} onMouseDown={(e) => e.currentTarget.style.borderBottom = '0'} onMouseUp={(e) => e.currentTarget.style.borderBottom = '4px solid #b59104'}>
           Get Started
         </button>
       </div>

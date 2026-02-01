@@ -1,18 +1,18 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { type ButtonHTMLAttributes, type CSSProperties } from "react";
 
 export interface RedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** When true renders the delete variant with a trash icon */
   delete?: boolean;
 }
 
-const TrashIcon = ({ className = "w-4 h-4 mr-2" }: { className?: string }) => (
+const TrashIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    className={className}
+    style={{width: '16px', height: '16px', marginRight: '8px'}}
     aria-hidden="true"
     focusable="false"
   >
@@ -25,17 +25,55 @@ const TrashIcon = ({ className = "w-4 h-4 mr-2" }: { className?: string }) => (
  * - Use the `delete` prop to show the trash icon and delete styling
  */
 export default function RedButton({ delete: isDelete, children, className = "", disabled, ...props }: RedButtonProps) {
-  const base = "inline-flex items-center justify-center px-4 py-2 rounded-md font-bold text-sm transition-all focus:outline-none disabled:opacity-60";
+  const base = {display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '8px 16px', borderRadius: '6px', fontWeight: 'bold', fontSize: '14px', transition: 'all 0.15s ease-in-out', outline: 'none'};
 
-  const deleteStyle = "bg-red-600 text-white hover:bg-red-700 active:translate-y-0.5 border-b-4 border-red-800 active:border-b-0";
-  const neutralStyle = "bg-red-100 text-red-800 hover:bg-red-200 border border-red-200";
+  const deleteStyle = {backgroundColor: '#dc2626', color: 'white', borderBottom: '4px solid #b91c1c'};
+  const neutralStyle = {backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5'};
 
-  const style = isDelete ? deleteStyle : neutralStyle;
+  let style: CSSProperties = isDelete ? {...base, ...deleteStyle} : {...base, ...neutralStyle};
+
+  if (disabled) {
+    style = {...style, opacity: 0.6};
+  }
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDelete) {
+      e.currentTarget.style.backgroundColor = '#b91c1c';
+    } else {
+      e.currentTarget.style.backgroundColor = '#fecaca';
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDelete) {
+      e.currentTarget.style.backgroundColor = '#dc2626';
+    } else {
+      e.currentTarget.style.backgroundColor = '#fef2f2';
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDelete) {
+      e.currentTarget.style.transform = 'translateY(2px)';
+      e.currentTarget.style.borderBottom = '0';
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDelete) {
+      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.borderBottom = '4px solid #b91c1c';
+    }
+  };
 
   return (
     <button
       type="button"
-      className={`${base} ${style} ${className}`}
+      style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
       aria-pressed={isDelete ? undefined : false}
       disabled={disabled}
       {...props}

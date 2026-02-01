@@ -3,23 +3,23 @@ import Footer from "../components/layout/Footer";
 
 const AptitudeTest = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
       <Header />
 
-      <main className="flex-grow py-12 px-6 max-w-4xl mx-auto">
-        <h1 className="text-4xl font-black text-[#00529b] mb-6">Aptitude Test</h1>
-        <p className="mb-6 text-gray-700">Welcome! This page will host the aptitude test. For now, here's a short sample and a button to start the full test.</p>
+      <main style={{flexGrow: 1, padding: '48px 24px', maxWidth: '1024px', margin: '0 auto'}}>
+        <h1 style={{fontSize: '36px', fontWeight: '900', color: '#00529b', marginBottom: '24px'}}>Aptitude Test</h1>
+        <p style={{marginBottom: '24px', color: '#374151'}}>Welcome! This page will host the aptitude test. For now, here's a short sample and a button to start the full test.</p>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="font-bold text-xl mb-4">Sample Question</h2>
-          <p className="mb-4">1) Which number completes the sequence: 2, 6, 12, 20, ?</p>
-          <ul className="list-disc pl-6 mb-6 text-gray-700">
+        <div style={{backgroundColor: 'white', padding: '24px', borderRadius: '8px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'}}>
+          <h2 style={{fontWeight: 'bold', fontSize: '20px', marginBottom: '16px'}}>Sample Question</h2>
+          <p style={{marginBottom: '16px'}}>1) Which number completes the sequence: 2, 6, 12, 20, ?</p>
+          <ul style={{listStyle: 'disc', paddingLeft: '24px', marginBottom: '24px', color: '#374151'}}>
             <li>24</li>
             <li>30</li>
             <li>28</li>
             <li>32</li>
           </ul>
-          <button className="bg-[#ffcb05] text-[#00529b] px-6 py-3 rounded-md font-bold hover:scale-105 transition-transform">Start Full Aptitude Test</button>
+          <button style={{backgroundColor: '#ffcb05', color: '#00529b', padding: '12px 24px', borderRadius: '6px', fontWeight: 'bold', transition: 'transform 0.15s ease-in-out'}} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>Start Full Aptitude Test</button>
         </div>
       </main>
 
