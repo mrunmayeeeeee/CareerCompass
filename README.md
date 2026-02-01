@@ -59,30 +59,61 @@ Before running this application, make sure you have the following installed:
 1. **Start MongoDB:**
    Make sure MongoDB is running on your local machine (default: `mongodb://127.0.0.1:27017/CareerCompass`)
 
-2. **Start the backend server:**
+2. **Seed the database (optional but recommended for testing):**
+   ```bash
+   cd backend-express
+   npm run seed
+   ```
+
+3. **Start the backend server:**
    ```bash
    cd backend-express
    npm run dev
    ```
    The backend will be available at `http://localhost:5000`
 
-3. **Start the frontend development server:**
+4. **Start the frontend development server:**
    ```bash
    cd ../react-frontend
    npm run dev
    ```
    The frontend will be available at `http://localhost:5173` (or the port shown in the terminal)
 
-4. **Open your browser:**
+5. **Open your browser:**
    Navigate to the frontend URL to start using the application.
 
 ## API Endpoints
 
 The backend provides the following API endpoints:
 
-- `GET /api/users` - Retrieve all users
+### Users
+- `POST /api/users/register` - Register a new user
+- `GET /api/users` - Get all users
+- `GET /api/users/:id` - Get user profile by ID
+- `PUT /api/users/:id/preferences` - Update user preferences
 
-*Note: Additional endpoints for careers, colleges, courses, and quizzes are planned for future implementation.*
+### Careers
+- `GET /api/careers` - Get all careers
+- `GET /api/careers/:id` - Get career details by ID
+- `GET /api/careers/:id/roadmap` - Get career roadmap
+- `GET /api/careers/:id/resources` - Get free learning resources
+
+### Colleges
+- `GET /api/colleges` - Get all colleges
+- `GET /api/colleges/:id` - Get college details by ID
+- `GET /api/colleges/course/:courseId` - Get colleges offering a specific course
+
+### Courses
+- `GET /api/courses/stream/:stream` - Get courses by stream (Science/Commerce/Arts)
+- `GET /api/courses/:id` - Get course details by ID
+- `POST /api/courses/compare` - Compare two courses
+
+### Quiz
+- `GET /api/quiz` - Get full quiz questions
+- `POST /api/quiz/submit` - Submit quiz answers and get career recommendations
+
+### Health Check
+- `GET /api/health` - API health check
 
 ## Project Structure
 

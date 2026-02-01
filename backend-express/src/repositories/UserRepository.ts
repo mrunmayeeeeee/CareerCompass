@@ -21,4 +21,9 @@ export class UserRepository {
   async update(userId: string, updateData: any) {
     return await User.findByIdAndUpdate(userId, updateData, { new: true });
   }
+
+  // Find all users
+  async findAll() {
+    return await User.find();
+  }
 }
