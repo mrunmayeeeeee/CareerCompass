@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom';
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import RedButton from '../components/custom-buttons/red-button';
 
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-
+      <RedButton></RedButton>
       <main className="flex-grow">
         {/* --- HERO SECTION --- */}
         <section className="bg-[#00529b] py-20 px-8 text-center border-b-8 border-[#ffcb05]">
@@ -17,9 +19,9 @@ const Home = () => {
               The ultimate compass for students and professionals to navigate the 2026 job market with data-driven insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-[#ffcb05] text-[#00529b] px-10 py-4 rounded-md font-black text-lg hover:scale-105 transition-transform shadow-xl">
+              <Link to="/aptitude" className="bg-[#ffcb05] text-[#00529b] px-10 py-4 rounded-md font-black text-lg hover:scale-105 transition-transform shadow-xl text-center">
                 START APTITUDE TEST
-              </button>
+              </Link>
               <button className="border-2 border-white text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-white hover:text-[#00529b] transition-all">
                 VIEW CAREER MAPS
               </button>
