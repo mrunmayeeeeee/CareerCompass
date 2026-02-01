@@ -11,7 +11,7 @@ export class UserController {
       res.status(201).json({
         message: 'User registered successfully',
         user: {
-          id: user._id,
+          id: user.id,
           name: user.name,
           email: user.email,
           stream: user.stream
@@ -24,14 +24,18 @@ export class UserController {
 
   async getProfile(req: Request, res: Response) {
     try {
-      const userId = req.params.id as string;
+      const userId = parseInt(req.params.id as string);
       const user = await userService.getUserProfile(userId);
       res.json({
-        id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         stream: user.stream,
-        profile: user.profile
+        profile: {
+          currentRole: user.currentRole,
+          skills: user.skills,
+          interests: user.interests
+        }
       });
     } catch (error: any) {
       res.status(404).json({ error: error.message });
@@ -40,7 +44,7 @@ export class UserController {
 
   async updatePreferences(req: Request, res: Response) {
     try {
-      const userId = req.params.id as string;
+      const userId = parseInt(req.params.id as string);
       const preferences = req.body;
       const user = await userService.updatePreferences(userId, preferences);
       if (!user) {
@@ -49,9 +53,13 @@ export class UserController {
       res.json({
         message: 'Preferences updated successfully',
         user: {
-          id: user._id,
+          id: user.id,
           stream: user.stream,
-          profile: user.profile
+          profile: {
+            currentRole: user.currentRole,
+            skills: user.skills,
+            interests: user.interests
+          }
         }
       });
     } catch (error: any) {

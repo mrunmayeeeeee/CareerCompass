@@ -16,7 +16,7 @@ export class CourseController {
 
   async getCourseById(req: Request, res: Response) {
     try {
-      const courseId = req.params.id as string;
+      const courseId = parseInt(req.params.id as string);
       const course = await courseService.getCourseDetails(courseId);
       res.json(course);
     } catch (error: any) {
@@ -27,7 +27,7 @@ export class CourseController {
   async compareCourses(req: Request, res: Response) {
     try {
       const { courseId1, courseId2 } = req.body;
-      const comparison = await courseService.compareCourses(courseId1, courseId2);
+      const comparison = await courseService.compareCourses(parseInt(courseId1), parseInt(courseId2));
       res.json(comparison);
     } catch (error: any) {
       res.status(400).json({ error: error.message });

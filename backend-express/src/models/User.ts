@@ -1,15 +1,38 @@
-import mongoose, { Schema} from 'mongoose';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-const UserSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  passwordHash: { type: String, required: true },
-  stream: { type: String, enum: ['Science', 'Commerce', 'Arts'] }, // [cite: 266]
-  profile: {
-    currentRole: { type: String, default: 'Student' },
-    skills: [String],
-    interests: [String]
-  }
-}, { timestamps: true });
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-export default mongoose.model('User', UserSchema);
+  @Column({ type: 'varchar' })
+  name!: string;
+
+  @Column({ type: 'varchar', unique: true })
+  email!: string;
+
+  @Column({ type: 'varchar' })
+  passwordHash!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['Science', 'Commerce', 'Arts'],
+    nullable: true
+  })
+  stream!: string;
+
+  @Column({ type: 'varchar', default: 'Student' })
+  currentRole!: string;
+
+  @Column('text', { array: true, nullable: true })
+  skills!: string[];
+
+  @Column('text', { array: true, nullable: true })
+  interests!: string[];
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

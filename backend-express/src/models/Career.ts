@@ -1,19 +1,31 @@
-import { Schema } from "mongoose";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-const Career = new Schema({
-  careerTitle: { type: String, required: true }, // [cite: 257]
-  jobDescription: { type: String }, // [cite: 257]
-  averageSalary: { type: String }, // [cite: 118]
-  requiredSkills: [String], // [cite: 118]
-  roadmapSteps: [{
-    stepTitle: { type: String },
-    description: { type: String }
-  }],
-  learningResources: [{ 
-    title: { type: String },
-    url: { type: String },
-    isFree: { type: Boolean, default: true } // [cite: 17, 137]
-  }]
-});
+@Entity()
+export class Career {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-export default Career;
+  @Column({ type: 'varchar' })
+  careerTitle!: string;
+
+  @Column({ type: 'text', nullable: true })
+  jobDescription!: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  averageSalary!: string;
+
+  @Column('text', { array: true, nullable: true })
+  requiredSkills!: string[];
+
+  @Column('json', { nullable: true })
+  roadmapSteps!: { stepTitle: string; description: string }[];
+
+  @Column('json', { nullable: true })
+  learningResources!: { title: string; url: string; isFree: boolean }[];
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

@@ -11,7 +11,7 @@ export class CourseService {
     return await courseRepository.findByStream(stream);
   }
 
-  async getCourseDetails(courseId: string) {
+  async getCourseDetails(courseId: number) {
     const course = await courseRepository.findById(courseId);
     if (!course) {
       throw new Error("Course not found");
@@ -19,7 +19,7 @@ export class CourseService {
     return course;
   }
 
-  async compareCourses(courseId1: string, courseId2: string) {
+  async compareCourses(courseId1: number, courseId2: number) {
     const course1 = await courseRepository.findById(courseId1);
     const course2 = await courseRepository.findById(courseId2);
     

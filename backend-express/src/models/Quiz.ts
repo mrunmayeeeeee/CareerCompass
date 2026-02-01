@@ -1,11 +1,19 @@
-import { Schema } from "mongoose";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-const QuizQuestion = new Schema({
-  questionText: { type: String, required: true }, // [cite: 261]
-  options: [{
-    optionText: { type: String, required: true }, // [cite: 263]
-    associatedCareerId: { type: Schema.Types.ObjectId, ref: 'Career' } // [cite: 263]
-  }]
-});
+@Entity()
+export class Quiz {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-export default QuizQuestion;
+  @Column({ type: 'varchar' })
+  questionText!: string;
+
+  @Column('json')
+  options!: { optionText: string; associatedCareerId: number }[];
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

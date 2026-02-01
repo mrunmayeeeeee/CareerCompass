@@ -1,11 +1,38 @@
-import mongoose, { Schema } from 'mongoose';
-const Course = new Schema({
-  courseName: { type: String, required: true }, // [cite: 252]
-  description: { type: String }, // [cite: 252]
-  durationYears: { type: Number }, // [cite: 252]
-  fees: { type: String }, // [cite: 124]
-  eligibilityCriteria: { type: String }, // [cite: 252]
-  stream: { type: String, enum: ['Science', 'Commerce', 'Arts'] }, // [cite: 162]
-  futureScope: { type: String } // [cite: 113]
-});
-export default mongoose.model('Course', Course);
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+@Entity()
+export class Course {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({ type: 'varchar' })
+  courseName!: string;
+
+  @Column({ type: 'text', nullable: true })
+  description!: string;
+
+  @Column({ type: 'int', nullable: true })
+  durationYears!: number;
+
+  @Column({ type: 'varchar', nullable: true })
+  fees!: string;
+
+  @Column({ type: 'text', nullable: true })
+  eligibilityCriteria!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['Science', 'Commerce', 'Arts'],
+    nullable: true
+  })
+  stream!: string;
+
+  @Column({ type: 'text', nullable: true })
+  futureScope!: string;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

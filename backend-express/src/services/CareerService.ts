@@ -9,7 +9,7 @@ export class CareerService {
   }
 
   // Get career details by ID
-  async getCareerDetails(careerId: string) {
+  async getCareerDetails(careerId: number) {
     const career = await careerRepository.findById(careerId);
     if (!career) {
       throw new Error("Career not found");
@@ -18,7 +18,7 @@ export class CareerService {
   }
 
   // Logic to get the step-by-step roadmap for a specific goal [cite: 436]
-  async getCareerRoadmap(careerId: string) {
+  async getCareerRoadmap(careerId: number) {
     const career = await careerRepository.findById(careerId);
     if (!career) {
       throw new Error("Career path not found");
@@ -31,7 +31,7 @@ export class CareerService {
   }
 
   // Logic to filter for free and curated learning resources only 
-  async getFreeResources(careerId: string) {
+  async getFreeResources(careerId: number) {
     const career = await careerRepository.findById(careerId);
     if (!career) {
       throw new Error("Career path not found");

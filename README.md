@@ -23,7 +23,7 @@ A comprehensive career guidance platform designed to help students and professio
 ### Backend
 - Node.js with Express
 - TypeScript
-- MongoDB with Mongoose
+- PostgreSQL with TypeORM
 - CORS for cross-origin requests
 
 ## Prerequisites
@@ -31,8 +31,54 @@ A comprehensive career guidance platform designed to help students and professio
 Before running this application, make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (version 18 or higher)
-- [MongoDB](https://www.mongodb.com/) (running locally on default port 27017)
+- [PostgreSQL](https://www.postgresql.org/download/) (version 16 or higher)
 - npm or yarn package manager
+
+### PostgreSQL Installation
+
+#### Windows:
+1. Download PostgreSQL from the [official website](https://www.postgresql.org/download/windows/)
+2. Run the installer and follow the setup wizard
+3. Note down the password you set for the `postgres` superuser
+4. PostgreSQL will be installed with pgAdmin (GUI tool)
+
+#### macOS:
+```bash
+brew install postgresql
+brew services start postgresql
+```
+
+#### Linux (Ubuntu/Debian):
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+```
+
+#### Verify Installation:
+```bash
+psql --version
+```
+
+### PostgreSQL Setup
+
+1. **Create Database and User:**
+   ```bash
+   # Connect as postgres superuser
+   psql -U postgres
+
+   # In psql shell:
+   CREATE USER yashm WITH PASSWORD 'root';
+   CREATE DATABASE careercompass OWNER yashm;
+   GRANT ALL PRIVILEGES ON DATABASE careercompass TO yashm;
+   \q
+   ```
+
+2. **Test Connection:**
+   ```bash
+   psql -U yashm -d careercompass -c "SELECT version();"
+   ```
 
 ## Installation
 
@@ -48,7 +94,17 @@ Before running this application, make sure you have the following installed:
    npm install
    ```
 
-3. **Install frontend dependencies:**
+3. **Configure Environment Variables:**
+   Create a `.env` file in the `backend-express` directory:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USERNAME=yashm
+   DB_PASSWORD=root
+   DB_NAME=careercompass
+   ```
+
+4. **Install frontend dependencies:**
    ```bash
    cd ../react-frontend
    npm install
@@ -56,13 +112,28 @@ Before running this application, make sure you have the following installed:
 
 ## Usage
 
-1. **Start MongoDB:**
-   Make sure MongoDB is running on your local machine (default: `mongodb://127.0.0.1:27017/CareerCompass`)
+1. **Ensure PostgreSQL is running:**
+   Make sure PostgreSQL service is started and the database `careercompass` exists.
 
-2. **Seed the database (optional but recommended for testing):**
+2. **Seed the database with dummy data (optional but recommended for testing):**
    ```bash
    cd backend-express
-   npm run seed
+   # Connect to PostgreSQL
+   psql -U yashm -d careercompass
+
+   # Run these INSERT commands in psql:
+   INSERT INTO "user" (name, email, "passwordHash", stream, "currentRole", skills, interests) VALUES ('John Doe', 'john@example.com', 'hashedpass1', 'Science', 'Student', ARRAY['Math', 'Physics'], ARRAY['AI', 'Robotics']);
+   INSERT INTO "user" (name, email, "passwordHash", stream, "currentRole", skills, interests) VALUES ('Jane Smith', 'jane@example.com', 'hashedpass2', 'Commerce', 'Student', ARRAY['Accounting'], ARRAY['Finance']);
+
+   INSERT INTO career ("careerTitle", "jobDescription", "averageSalary", "requiredSkills", "roadmapSteps", "learningResources") VALUES ('Software Engineer', 'Develop software applications', '$100,000', ARRAY['Programming', 'Algorithms'], '[{"stepTitle": "Learn Basics", "description": "Learn programming"}]'::json, '[{"title": "Codecademy", "url": "https://codecademy.com", "isFree": true}]'::json);
+
+   INSERT INTO course ("courseName", description, "durationYears", fees, "eligibilityCriteria", stream, "futureScope") VALUES ('B.Tech Computer Science', 'Engineering course', 4, '$50,000', '12th Science', 'Science', 'High demand in tech');
+
+   INSERT INTO college ("collegeName", location, "websiteUrl", description, "offeredCourses") VALUES ('IIT Delhi', 'Delhi', 'https://iitd.ac.in', 'Top engineering college', '[{"courseId": 1, "cutoff": "95%"}]'::json);
+
+   INSERT INTO quiz ("questionText", options) VALUES ('What interests you more?', '[{"optionText": "Math", "associatedCareerId": 1}, {"optionText": "Business", "associatedCareerId": 2}]'::json);
+
+   \q
    ```
 
 3. **Start the backend server:**
@@ -115,18 +186,36 @@ The backend provides the following API endpoints:
 ### Health Check
 - `GET /api/health` - API health check
 
+## Troubleshooting
+
+### PostgreSQL Connection Issues
+- Ensure PostgreSQL service is running
+- Verify the credentials in `.env` match your database setup
+- Check if the database `careercompass` exists and user `yashm` has permissions
+
+### Port Conflicts
+- Backend runs on port 5000 by default
+- Frontend runs on port 5173 by default
+- Change ports in respective config files if needed
+
+### Database Tables Not Created
+- TypeORM auto-creates tables with `synchronize: true` in development
+- For production, set `synchronize: false` and use migrations
+
 ## Project Structure
 
 ```
 CareerCompass/
 ├── backend-express/          # Express.js backend
 │   ├── src/
-│   │   ├── models/          # Mongoose models
+│   │   ├── models/          # TypeORM entities
 │   │   ├── repositories/    # Data access layer
 │   │   ├── services/        # Business logic
 │   │   ├── controllers/     # Route handlers
 │   │   ├── routes/          # API routes
+│   │   ├── data-source.ts   # TypeORM configuration
 │   │   └── server.ts        # Main server file
+│   ├── .env                 # Environment variables
 │   ├── package.json
 │   └── tsconfig.json
 ├── react-frontend/           # React frontend
