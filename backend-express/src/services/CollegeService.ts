@@ -9,7 +9,7 @@ export class CollegeService {
   }
 
   // Logic to suggest colleges based on a specific course 
-  async getCollegesByCourse(courseId: string) {
+  async getCollegesByCourse(courseId: number) {
     if (!courseId) {
       throw new Error("Course ID is required to fetch colleges");
     }
@@ -17,7 +17,7 @@ export class CollegeService {
   }
 
   // Logic to view specific college details and its official website link [cite: 124]
-  async getCollegeDetails(collegeId: string) {
+  async getCollegeDetails(collegeId: number) {
     const college = await collegeRepository.findById(collegeId);
     if (!college) {
       throw new Error("College not found");

@@ -1,14 +1,28 @@
-import mongoose, { Schema } from 'mongoose';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-const CollegeSchema = new Schema({
-  collegeName: { type: String, required: true }, // [cite: 249]
-  location: { type: String }, // [cite: 249]
-  websiteUrl: { type: String }, // [cite: 124]
-  description: { type: String }, // [cite: 249]
-  offeredCourses: [{ 
-    courseId: { type: Schema.Types.ObjectId, ref: 'Course' },
-    cutoff: { type: String } // [cite: 124]
-  }]
-});
+@Entity()
+export class College {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-export default mongoose.model('College', CollegeSchema);
+  @Column({ type: 'varchar' })
+  collegeName!: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  location!: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  websiteUrl!: string;
+
+  @Column({ type: 'text', nullable: true })
+  description!: string;
+
+  @Column('json', { nullable: true })
+  offeredCourses!: { courseId: number; cutoff: string }[];
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

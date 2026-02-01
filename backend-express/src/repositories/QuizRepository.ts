@@ -1,14 +1,22 @@
-import QuizQuestion from '../models/Quiz.js';
+import { Repository } from 'typeorm';
+import { Quiz } from '../models/Quiz.js';
+import { AppDataSource } from '../data-source.js';
 
 export class QuizRepository {
-  // Fetch all questions with their associated career paths [cite: 261, 283]
-  async findAllQuestions() {
-    return await (QuizQuestion as any).find().populate('options.associatedCareerId');
+  private repository: Repository<Quiz>;
+
+  constructor() {
+    this.repository = AppDataSource.getRepository(Quiz);
   }
 
-  // Admin: Mechanism to dynamically deliver/update quiz content [cite: 29]
-  async createQuestion(questionData: any) {
-    const question = new (QuizQuestion as any)(questionData);
-    return await question.save();
+  // Fetch all questions with their associated career paths
+  async findAllQuestions() {
+    return await this.repository.find();
+  }
+
+  // Admin: Mechanism to dynamically deliver/update quiz content
+  async createQuestion(questionData: Partial<Quiz>) {
+    const question = this.repository.create(questionData);
+    return await this.repository.save(question);
   }
 }

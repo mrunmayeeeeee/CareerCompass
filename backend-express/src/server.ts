@@ -1,7 +1,11 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
+import 'reflect-metadata';
 import dotenv from 'dotenv';
+
+dotenv.config();
+
+import express from 'express';
+import cors from 'cors';
+import { AppDataSource } from './data-source.js';
 
 // Import route modules
 import userRoutes from './routes/userRoutes.js';
@@ -16,11 +20,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = 'mongodb://127.0.0.1:27017/CareerCompass';
-
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('✅ Connected to CareerCompass Database'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+// Initialize TypeORM
+AppDataSource.initialize()
+  .then(() => {
+    console.log('✅ Connected to PostgreSQL Database');
+  })
+  .catch((error) => console.log('❌ PostgreSQL Connection Error:', error));
 
 // API Routes
 app.use('/api/users', userRoutes);

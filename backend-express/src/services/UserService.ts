@@ -3,7 +3,7 @@ import { UserRepository } from '../repositories/UserRepository.js';
 const userRepository = new UserRepository();
 
 export class UserService {
-  // Logic for user registration 
+  // Logic for user registration
   async registerUser(userData: { name: string; email: string; passwordHash: string }) {
     const existingUser = await userRepository.findByEmail(userData.email);
     if (existingUser) {
@@ -12,8 +12,8 @@ export class UserService {
     return await userRepository.create(userData);
   }
 
-  // Logic to fetch user profile for the personalized dashboard [cite: 163, 314]
-  async getUserProfile(userId: string) {
+  // Logic to fetch user profile for the personalized dashboard
+  async getUserProfile(userId: number) {
     const user = await userRepository.findById(userId);
     if (!user) {
       throw new Error("User not found.");
@@ -22,18 +22,18 @@ export class UserService {
   }
 
   /**
-   * Logic to update student stream and skills [cite: 313, 356]
+   * Logic to update student stream and skills
    * This bridges the gap between their 12th standard background and career goals.
    */
-  async updatePreferences(userId: string, preferences: { stream?: string; skills?: string[] }) {
+  async updatePreferences(userId: number, preferences: { stream?: string; skills?: string[] }) {
     const validStreams = ['Science', 'Commerce', 'Arts'];
     if (preferences.stream && !validStreams.includes(preferences.stream)) {
       throw new Error("Invalid stream selected.");
     }
-    
-    return await userRepository.update(userId, { 
+
+    return await userRepository.update(userId, {
       stream: preferences.stream,
-      'profile.skills': preferences.skills 
+      skills: preferences.skills
     });
   }
 
