@@ -1,11 +1,17 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home"
+import AptitudeTest from "./pages/AptitudeTest"
+
 function App() {
   return (
-    // 2. Use them as tags inside the return statement
-    <div className="min-h-screen bg-slate-50">
-      <Home />
-      {/* You can add a Footer here later! */}
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-slate-50">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/aptitude" element={<AptitudeTest />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 
