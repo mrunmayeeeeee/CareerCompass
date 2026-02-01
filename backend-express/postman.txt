@@ -1,0 +1,236 @@
+Perfect idea 👍
+Here’s the **same Postman collection converted into a clean `.txt` style**, so it’s **easy to read, copy, and use** (especially for teammates or submission).
+
+---
+
+CareerCompass API – Postman Testing Guide
+Base URL: [http://localhost:5000](http://localhost:5000)
+
+For POST / PUT requests
+Header:
+Content-Type: application/json
+
+==================================================
+HEALTH CHECK
+============
+
+GET /api/health
+URL: [http://localhost:5000/api/health](http://localhost:5000/api/health)
+
+Expected Response:
+{
+"status": "OK",
+"message": "CareerCompass API is running"
+}
+
+==================================================
+USERS API
+=========
+
+POST /api/users/register
+URL: [http://localhost:5000/api/users/register](http://localhost:5000/api/users/register)
+
+Body (JSON):
+{
+"name": "Test User",
+"email": "[test@example.com](mailto:test@example.com)",
+"passwordHash": "hashedpassword123"
+}
+
+Expected Response:
+{
+"message": "User registered successfully",
+"user": {
+"id": 3,
+"name": "Test User",
+"email": "[test@example.com](mailto:test@example.com)",
+"stream": null
+}
+}
+
+---
+
+GET /api/users
+URL: [http://localhost:5000/api/users](http://localhost:5000/api/users)
+
+Expected Response:
+[
+{
+"id": 1,
+"name": "John Doe",
+"email": "[john@example.com](mailto:john@example.com)",
+"passwordHash": "hashedpass1",
+"stream": "Science",
+"currentRole": "Student",
+"skills": ["Math", "Physics"],
+"interests": ["AI", "Robotics"]
+}
+]
+
+---
+
+GET /api/users/:id
+Example URL: [http://localhost:5000/api/users/1](http://localhost:5000/api/users/1)
+
+Expected Response:
+{
+"id": 1,
+"name": "John Doe",
+"email": "[john@example.com](mailto:john@example.com)",
+"stream": "Science",
+"profile": {
+"currentRole": "Student",
+"skills": ["Math", "Physics"],
+"interests": ["AI", "Robotics"]
+}
+}
+
+---
+
+PUT /api/users/:id/preferences
+Example URL: [http://localhost:5000/api/users/1/preferences](http://localhost:5000/api/users/1/preferences)
+
+Body (JSON):
+{
+"stream": "Science",
+"skills": ["Math", "Physics", "Chemistry"]
+}
+
+Expected Response:
+{
+"message": "Preferences updated successfully"
+}
+
+==================================================
+CAREERS API
+===========
+
+GET /api/careers
+URL: [http://localhost:5000/api/careers](http://localhost:5000/api/careers)
+
+Expected Response:
+[
+{
+"id": 1,
+"careerTitle": "Software Engineer",
+"jobDescription": "Develop software applications",
+"averageSalary": "$100,000",
+"requiredSkills": ["Programming", "Algorithms"]
+}
+]
+
+---
+
+GET /api/careers/:id
+Example URL: [http://localhost:5000/api/careers/1](http://localhost:5000/api/careers/1)
+
+---
+
+GET /api/careers/:id/roadmap
+Example URL: [http://localhost:5000/api/careers/1/roadmap](http://localhost:5000/api/careers/1/roadmap)
+
+Expected Response:
+{
+"title": "Software Engineer",
+"steps": [
+{
+"stepTitle": "Learn Basics",
+"description": "Learn programming"
+}
+],
+"salary": "$100,000"
+}
+
+---
+
+GET /api/careers/:id/resources
+Example URL: [http://localhost:5000/api/careers/1/resources](http://localhost:5000/api/careers/1/resources)
+
+==================================================
+COLLEGES API
+============
+
+GET /api/colleges
+URL: [http://localhost:5000/api/colleges](http://localhost:5000/api/colleges)
+
+---
+
+GET /api/colleges/:id
+Example URL: [http://localhost:5000/api/colleges/1](http://localhost:5000/api/colleges/1)
+
+---
+
+GET /api/colleges/course/:courseId
+Example URL: [http://localhost:5000/api/colleges/course/1](http://localhost:5000/api/colleges/course/1)
+
+==================================================
+COURSES API
+===========
+
+GET /api/courses/stream/:stream
+Example URL:
+[http://localhost:5000/api/courses/stream/Science](http://localhost:5000/api/courses/stream/Science)
+
+---
+
+GET /api/courses/:id
+Example URL: [http://localhost:5000/api/courses/1](http://localhost:5000/api/courses/1)
+
+---
+
+POST /api/courses/compare
+URL: [http://localhost:5000/api/courses/compare](http://localhost:5000/api/courses/compare)
+
+Body (JSON):
+{
+"courseId1": 1,
+"courseId2": 2
+}
+
+==================================================
+QUIZ API
+========
+
+GET /api/quiz
+URL: [http://localhost:5000/api/quiz](http://localhost:5000/api/quiz)
+
+---
+
+POST /api/quiz/submit
+URL: [http://localhost:5000/api/quiz/submit](http://localhost:5000/api/quiz/submit)
+
+Body (JSON):
+{
+"answers": [
+{
+"questionId": 1,
+"selectedOption": 0
+}
+]
+}
+
+Expected Response:
+{
+"message": "Quiz submitted successfully",
+"recommendations": ["Software Engineer"]
+}
+
+==================================================
+POSTMAN USAGE TIPS
+==================
+
+1. Start backend first
+   npm run dev
+
+2. Use raw → JSON for POST / PUT
+
+3. Always test /api/health first
+
+4. Status codes to watch:
+   200 OK
+   400 Bad Request
+   404 Not Found
+   500 Server Error
+
+==================================================
+
