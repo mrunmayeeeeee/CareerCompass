@@ -8,6 +8,15 @@ export class CareerService {
     return await careerRepository.findAll();
   }
 
+  // Get career details by ID
+  async getCareerDetails(careerId: string) {
+    const career = await careerRepository.findById(careerId);
+    if (!career) {
+      throw new Error("Career not found");
+    }
+    return career;
+  }
+
   // Logic to get the step-by-step roadmap for a specific goal [cite: 436]
   async getCareerRoadmap(careerId: string) {
     const career = await careerRepository.findById(careerId);

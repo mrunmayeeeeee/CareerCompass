@@ -36,4 +36,9 @@ export class UserService {
       'profile.skills': preferences.skills 
     });
   }
+
+  // Get all users (for admin purposes)
+  async getAllUsers() {
+    return await userRepository.findAll();
+  }
 }

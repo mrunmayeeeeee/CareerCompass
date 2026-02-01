@@ -2,7 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import User from './models/User.js';
+
+// Import route modules
+import userRoutes from './routes/userRoutes.js';
+import careerRoutes from './routes/careerRoutes.js';
+import collegeRoutes from './routes/collegeRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
+import quizRoutes from './routes/quizRoutes.js';
 
 dotenv.config();
 
@@ -16,17 +22,20 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ Connected to CareerCompass Database'))
   .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
-app.get('/api/users', async (req, res) => {
-  try {
-    // We use the 'User' Model to find data
-    const allUsers = await User.find(); 
-    res.json(allUsers);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching users" });
-  }
+// API Routes
+app.use('/api/users', userRoutes);
+app.use('/api/careers', careerRoutes);
+app.use('/api/colleges', collegeRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/quiz', quizRoutes);
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'CareerCompass API is running' });
 });
 
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server ready at http://localhost:${PORT}`);
+  console.log(`📚 API Documentation available at http://localhost:${PORT}/api/health`);
 });
