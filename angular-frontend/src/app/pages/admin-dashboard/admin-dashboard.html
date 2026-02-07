@@ -1,14 +1,111 @@
-<nav class="tabs">
-  <button 
-    *ngIf="auth.isAdmin()" 
-    [class.active]="activeTab === 'users'" 
-    (click)="activeTab = 'users'">
-    Manage Users
-  </button>
+<div class="dashboard-container">
   
-  <button 
-    [class.active]="activeTab === 'quiz'" 
-    (click)="activeTab = 'quiz'">
-    Manage Quiz
-  </button>
-</nav>
+  <header>
+    <h1>Admin Dashboard</h1>
+    <button (click)="auth.logout()" class="btn-logout">Logout</button>
+  </header>
+
+  <nav class="tabs">
+    <button *ngIf="auth.isAdmin()" 
+            [class.active]="activeTab === 'users'" 
+            (click)="activeTab = 'users'">
+      Manage Users
+    </button>
+    <button [class.active]="activeTab === 'quiz'" 
+            (click)="activeTab = 'quiz'">
+      Manage Quiz
+    </button>
+  </nav>
+
+  <div *ngIf="activeTab === 'users'" class="tab-content">
+    <h2>Registered Users</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.id}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>
+            <span class="badge" [class.admin]="user.role === 'admin'">
+              {{user.role}}
+            </span>
+          </td>
+          <td>
+            <button *ngIf="user.role !== 'admin'" 
+                    (click)="deleteUser(user.id)" 
+                    class="btn-delete">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="activeTab === 'quiz'" class="tab-content">
+    
+    <div class="quiz-header">
+      <h2>Question Bank</h2>
+      <button (click)="showForm = !showForm" class="btn-add">
+        {{ showForm ? 'Cancel' : '+ Add Question' }}
+      </button>
+    </div>
+
+    <div *ngIf="showForm" class="form-card">
+      <h3>Add New Question</h3>
+      <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+        <div class="row">
+          <select formControlName="category">
+            <option value="Science">Science</option>
+            <option value="Commerce">Commerce</option>
+            <option value="Arts">Arts</option>
+          </select>
+          <input formControlName="questionText" placeholder="Enter Question text" class="wide">
+        </div>
+
+        <div class="options-grid">
+          <input formControlName="optionA" placeholder="Option A">
+          <input formControlName="optionB" placeholder="Option B">
+          <input formControlName="optionC" placeholder="Option C">
+          <input formControlName="optionD" placeholder="Option D">
+        </div>
+
+        <div class="row footer-row">
+          <label>Correct Answer:</label>
+          <select formControlName="correctOption">
+            <option value="A">Option A</option>
+            <option value="B">Option B</option>
+            <option value="C">Option C</option>
+            <option value="D">Option D</option>
+          </select>
+          <button type="submit" [disabled]="!questionForm.valid" class="btn-save">Save Question</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="question-list">
+      <div *ngFor="let q of questions" class="q-item">
+        <div class="q-content">
+          <span class="category-tag">{{q.category}}</span>
+          <strong>{{q.questionText}}</strong>
+          <div class="options-preview">
+            <small>A: {{q.optionA}} | B: {{q.optionB}} | C: {{q.optionC}} | D: {{q.optionD}}</small>
+            <br>
+            <small class="correct-ans">Correct: {{q.correctOption}}</small>
+          </div>
+        </div>
+        <button (click)="deleteQuestion(q.id)" class="btn-delete-icon">🗑</button>
+      </div>
+    </div>
+  </div>
+
+</div>
