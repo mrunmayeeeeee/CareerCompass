@@ -1,1 +1,17 @@
-<p>register works!</p>
+<div class="auth-container">
+  <h2>Create Account</h2>
+  <form (submit)="onRegister()">
+    <input [(ngModel)]="user.username" name="username" placeholder="Username" required>
+    <input [(ngModel)]="user.email" name="email" type="email" placeholder="Email" required>
+    <input [(ngModel)]="user.password" name="password" type="password" placeholder="Password" required>
+    
+    <select [(ngModel)]="user.role" name="role">
+      <option value="student">Student</option>
+      <option value="faculty">Faculty</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+</div>

@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { QuizController } from '../controllers/QuizController.js';
+import { authorize } from '../middleware/authMiddleware.js';
 
 const router = Router();
 const quizController = new QuizController();
 
-// Use arrow functions to maintain 'this' context if needed
+// GET all questions (Everyone)
 router.get('/', (req, res) => quizController.getAllQuestions(req, res));
-router.post('/', (req, res) => quizController.addQuestion(req, res));
-router.delete('/:id', (req, res) => quizController.removeQuestion(req, res));
+
+// CREATE / DELETE questions (Faculty & Admin Only)
+router.post('/', authorize(['admin', 'faculty']), (req, res) => quizController.addQuestion(req, res));
+router.delete('/:id', authorize(['admin', 'faculty']), (req, res) => quizController.removeQuestion(req, res));
 
 export default router;

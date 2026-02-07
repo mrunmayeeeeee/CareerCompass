@@ -1,38 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ type: 'varchar' })
-  name!: string;
+    @Column({ type: "varchar", unique: true }) // Explicitly set type to "varchar"
+    username: string;
 
-  @Column({ type: 'varchar', unique: true })
-  email!: string;
+    @Column({ type: "varchar", unique: true })
+    email: string;
 
-  @Column({ type: 'varchar' })
-  passwordHash!: string;
+    @Column({ type: "varchar" })
+    password: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['Science', 'Commerce', 'Arts'],
-    nullable: true
-  })
-  stream!: string;
-
-  @Column({ type: 'varchar', default: 'Student' })
-  currentRole!: string;
-
-  @Column('text', { array: true, nullable: true })
-  skills!: string[];
-
-  @Column('text', { array: true, nullable: true })
-  interests!: string[];
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
+    @Column({ type: "varchar", default: "student" })
+    role: string;
 }
