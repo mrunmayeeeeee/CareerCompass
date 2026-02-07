@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "target": "es2022",
+    "experimentalDecorators": true, // Must be true
+    "emitDecoratorMetadata": true,   // Must be true
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ES2022"
+    "moduleResolution": "NodeNext"
   }
 }
