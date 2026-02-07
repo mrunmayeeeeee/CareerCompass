@@ -39,4 +39,8 @@ export class AuthService {
   isAdmin(): boolean {
     return this.getRole() === 'admin';
   }
+  
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
 }
