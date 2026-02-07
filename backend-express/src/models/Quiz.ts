@@ -1,4 +1,3 @@
-// Add CreateDateColumn to the list of imports
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity("questions")
@@ -6,28 +5,28 @@ export class QuizQuestion {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    // Add { type: "varchar" } or { type: "text" } explicitly
+    @Column({ type: "varchar", length: 50 }) 
     category: string;
 
     @Column({ name: "question_text", type: "text" })
     questionText: string;
 
-    @Column({ name: "option_a" })
+    @Column({ name: "option_a", type: "varchar" })
     optionA: string;
 
-    @Column({ name: "option_b" })
+    @Column({ name: "option_b", type: "varchar" })
     optionB: string;
 
-    @Column({ name: "option_c" })
+    @Column({ name: "option_c", type: "varchar" })
     optionC: string;
 
-    @Column({ name: "option_d" })
+    @Column({ name: "option_d", type: "varchar" })
     optionD: string;
 
-    @Column({ name: "correct_option", length: 1 })
+    @Column({ name: "correct_option", type: "char", length: 1 })
     correctOption: string;
 
-    // This will now work because it is imported above
     @CreateDateColumn({ name: "created_at" })
     createdAt: Date;
 }

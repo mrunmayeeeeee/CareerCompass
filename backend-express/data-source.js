@@ -5,7 +5,7 @@ import { User } from "./models/User.js";
 import { Course } from "./models/Course.js";
 import { College } from "./models/College.js";
 import { Career } from "./models/Career.js";
-import { QuizQuestion } from "./models/Quiz.js";
+import { QuizQuestion } from "./models/Quiz.js"; 
 
 dotenv.config();
 
@@ -16,9 +16,9 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: true, // Auto-creates tables based on models - use false in production
+    synchronize: true, 
     logging: false,
-    entities: [User, Course, College, Career, QuizQuestion],
+    entities: [User, Course, College, Career, QuizQuestion], 
     migrations: [],
     subscribers: [],
 });

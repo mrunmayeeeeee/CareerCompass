@@ -6,7 +6,7 @@ import { User } from './models/User.js';
 import { Career } from './models/Career.js';
 import { College } from './models/College.js';
 import { Course } from './models/Course.js';
-import { Quiz } from './models/Quiz.js';
+import { QuizQuestion } from './models/Quiz.js';
 
 dotenv.config(); // 👈 REQUIRED HERE
 
@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true, // dev only
   logging: false,
-  entities: [User, Career, College, Course, Quiz],
+  entities: [User, Career, College, Course, QuizQuestion],
 });

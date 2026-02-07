@@ -1,0 +1,30 @@
+<app-header></app-header>
+
+<main style="max-width: 800px; margin: 40px auto; padding: 20px;">
+  <h1 style="color: #00529b;">Aptitude Assessment</h1>
+
+  @if (!submitted) {
+    <div>
+      @for (q of questions; track q.id; let i = $index) {
+        <div class="quiz-card">
+          <h3>{{i + 1}}. {{q.questionText}}</h3>
+          <div class="options">
+            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'A'"> {{q.optionA}}</label>
+            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'B'"> {{q.optionB}}</label>
+            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'C'"> {{q.optionC}}</label>
+            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'D'"> {{q.optionD}}</label>
+          </div>
+        </div>
+      }
+      <button (click)="submitExam()" class="btn-submit">Finish Test</button>
+    </div>
+  } @else {
+    <div class="results-box">
+      <h2>Exam Results</h2>
+      <p>You scored <strong>{{score}}</strong> out of {{questions.length}}</p>
+      <button (click)="submitted = false" class="btn-retry">Try Again</button>
+    </div>
+  }
+</main>
+
+<app-footer></app-footer>

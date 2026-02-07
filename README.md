@@ -1,241 +1,79 @@
-# CareerCompass
+### 1. Create the Database
 
-A comprehensive career guidance platform designed to help students and professionals navigate their career paths with data-driven insights, aptitude tests, and personalized recommendations.
+Run this in your `psql` terminal:
 
-## Features
-
-- **Aptitude Testing**: Interactive quiz system to assess skills and interests
-- **Career Recommendations**: AI-powered suggestions based on quiz results and user profiles
-- **College & Course Database**: Information on colleges, courses, cutoffs, and eligibility
-- **Career Roadmaps**: Step-by-step guides for various career paths
-- **Skill Analysis**: Match current abilities with high-growth industries
-- **Market Trends**: Real-time data on job market trends and salaries
-- **User Profiles**: Personalized dashboards for tracking progress
-
-## Tech Stack
-
-### Frontend
-- React 19 with TypeScript
-- Vite for build tooling
-- Tailwind CSS for styling
-- ESLint for code quality
-
-### Backend
-- Node.js with Express
-- TypeScript
-- PostgreSQL with TypeORM
-- CORS for cross-origin requests
-
-## Prerequisites
-
-Before running this application, make sure you have the following installed:
-
-- [Node.js](https://nodejs.org/) (version 18 or higher)
-- [PostgreSQL](https://www.postgresql.org/download/) (version 16 or higher)
-- npm or yarn package manager
-
-### PostgreSQL Installation
-
-#### Windows:
-1. Download PostgreSQL from the [official website](https://www.postgresql.org/download/windows/)
-2. Run the installer and follow the setup wizard
-3. Note down the password you set for the `postgres` superuser
-4. PostgreSQL will be installed with pgAdmin (GUI tool)
-
-#### macOS:
-```bash
-brew install postgresql
-brew services start postgresql
-```
-
-#### Linux (Ubuntu/Debian):
-```bash
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-```
-
-#### Verify Installation:
-```bash
-psql --version
-```
-
-### PostgreSQL Setup
-
-1. **Create Database and User:**
-   ```bash
-   # Connect as postgres superuser
-   psql -U postgres
-
-   # In psql shell:
-   CREATE USER yashm WITH PASSWORD 'root';
-   CREATE DATABASE careercompass OWNER yashm;
-   GRANT ALL PRIVILEGES ON DATABASE careercompass TO yashm;
-   \q
-   ```
-
-2. **Test Connection:**
-   ```bash
-   psql -U yashm -d careercompass -c "SELECT version();"
-   ```
-
-## Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/mrunmayeeeeee/CareerCompass.git
-   cd CareerCompass
-   ```
-
-2. **Install backend dependencies:**
-   ```bash
-   cd backend-express
-   npm install
-   ```
-
-3. **Configure Environment Variables:**
-   Create a `.env` file in the `backend-express` directory:
-   ```env
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_USERNAME=yashm
-   DB_PASSWORD=root
-   DB_NAME=careercompass
-   ```
-
-4. **Install frontend dependencies:**
-   ```bash
-   cd ../react-frontend
-   npm install
-   ```
-
-## Usage
-
-1. **Ensure PostgreSQL is running:**
-   Make sure PostgreSQL service is started and the database `careercompass` exists.
-
-2. **Seed the database with dummy data (optional but recommended for testing):**
-   ```bash
-   cd backend-express
-   # Connect to PostgreSQL
-   psql -U yashm -d careercompass
-
-   # Run these INSERT commands in psql:
-   INSERT INTO "user" (name, email, "passwordHash", stream, "currentRole", skills, interests) VALUES ('John Doe', 'john@example.com', 'hashedpass1', 'Science', 'Student', ARRAY['Math', 'Physics'], ARRAY['AI', 'Robotics']);
-   INSERT INTO "user" (name, email, "passwordHash", stream, "currentRole", skills, interests) VALUES ('Jane Smith', 'jane@example.com', 'hashedpass2', 'Commerce', 'Student', ARRAY['Accounting'], ARRAY['Finance']);
-
-   INSERT INTO career ("careerTitle", "jobDescription", "averageSalary", "requiredSkills", "roadmapSteps", "learningResources") VALUES ('Software Engineer', 'Develop software applications', '$100,000', ARRAY['Programming', 'Algorithms'], '[{"stepTitle": "Learn Basics", "description": "Learn programming"}]'::json, '[{"title": "Codecademy", "url": "https://codecademy.com", "isFree": true}]'::json);
-
-   INSERT INTO course ("courseName", description, "durationYears", fees, "eligibilityCriteria", stream, "futureScope") VALUES ('B.Tech Computer Science', 'Engineering course', 4, '$50,000', '12th Science', 'Science', 'High demand in tech');
-
-   INSERT INTO college ("collegeName", location, "websiteUrl", description, "offeredCourses") VALUES ('IIT Delhi', 'Delhi', 'https://iitd.ac.in', 'Top engineering college', '[{"courseId": 1, "cutoff": "95%"}]'::json);
-
-   INSERT INTO quiz ("questionText", options) VALUES ('What interests you more?', '[{"optionText": "Math", "associatedCareerId": 1}, {"optionText": "Business", "associatedCareerId": 2}]'::json);
-
-   \q
-   ```
-
-3. **Start the backend server:**
-   ```bash
-   cd backend-express
-   npm run dev
-   ```
-   The backend will be available at `http://localhost:5000`
-
-4. **Start the frontend development server:**
-   ```bash
-   cd ../react-frontend
-   npm run dev
-   ```
-   The frontend will be available at `http://localhost:5173` (or the port shown in the terminal)
-
-5. **Open your browser:**
-   Navigate to the frontend URL to start using the application.
-
-## API Endpoints
-
-The backend provides the following API endpoints:
-
-### Users
-- `POST /api/users/register` - Register a new user
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user profile by ID
-- `PUT /api/users/:id/preferences` - Update user preferences
-
-### Careers
-- `GET /api/careers` - Get all careers
-- `GET /api/careers/:id` - Get career details by ID
-- `GET /api/careers/:id/roadmap` - Get career roadmap
-- `GET /api/careers/:id/resources` - Get free learning resources
-
-### Colleges
-- `GET /api/colleges` - Get all colleges
-- `GET /api/colleges/:id` - Get college details by ID
-- `GET /api/colleges/course/:courseId` - Get colleges offering a specific course
-
-### Courses
-- `GET /api/courses/stream/:stream` - Get courses by stream (Science/Commerce/Arts)
-- `GET /api/courses/:id` - Get course details by ID
-- `POST /api/courses/compare` - Compare two courses
-
-### Quiz
-- `GET /api/quiz` - Get full quiz questions
-- `POST /api/quiz/submit` - Submit quiz answers and get career recommendations
-
-### Health Check
-- `GET /api/health` - API health check
-
-## Troubleshooting
-
-### PostgreSQL Connection Issues
-- Ensure PostgreSQL service is running
-- Verify the credentials in `.env` match your database setup
-- Check if the database `careercompass` exists and user `yashm` has permissions
-
-### Port Conflicts
-- Backend runs on port 5000 by default
-- Frontend runs on port 5173 by default
-- Change ports in respective config files if needed
-
-### Database Tables Not Created
-- TypeORM auto-creates tables with `synchronize: true` in development
-- For production, set `synchronize: false` and use migrations
-
-## Project Structure
+```sql
+CREATE DATABASE career_compass_new;
 
 ```
-CareerCompass/
-├── backend-express/          # Express.js backend
-│   ├── src/
-│   │   ├── models/          # TypeORM entities
-│   │   ├── repositories/    # Data access layer
-│   │   ├── services/        # Business logic
-│   │   ├── controllers/     # Route handlers
-│   │   ├── routes/          # API routes
-│   │   ├── data-source.ts   # TypeORM configuration
-│   │   └── server.ts        # Main server file
-│   ├── .env                 # Environment variables
-│   ├── package.json
-│   └── tsconfig.json
-├── react-frontend/           # React frontend
-│   ├── src/
-│   │   ├── components/      # Reusable components
-│   │   ├── pages/           # Page components
-│   │   └── App.tsx          # Main app component
-│   ├── package.json
-│   └── vite.config.ts
-└── README.md
+
+*Note: After running this, connect to the new database by typing `\c career_compass_new`.*
+
+---
+
+### 2. Create the Questions Table
+
+This schema includes a `category` column to power your **Recommendation Engine** (Science, Math, Arts) and a `correct_option` column for the CRUD logic.
+
+```sql
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    category VARCHAR(50) NOT NULL, -- Science, Math, or Arts
+    question_text TEXT NOT NULL,
+    option_a TEXT NOT NULL,
+    option_b TEXT NOT NULL,
+    option_c TEXT NOT NULL,
+    option_d TEXT NOT NULL,
+    correct_option CHAR(1) NOT NULL, -- 'A', 'B', 'C', or 'D'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 ```
 
-## Contributing
+---
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### 3. Insert Initial Question Data (Seed Data)
 
-## License
+Here are the 15 questions categorized by stream to get your project started:
 
-This project is licensed under the ISC License.
+```sql
+INSERT INTO questions (category, question_text, option_a, option_b, option_c, option_d, correct_option) VALUES
+-- SCIENCE
+('Science', 'What is the powerhouse of the cell?', 'Nucleus', 'Mitochondria', 'Ribosome', 'Golgi Body', 'B'),
+('Science', 'Which law states that for every action there is an equal and opposite reaction?', 'Newton 1st', 'Newton 2nd', 'Newton 3rd', 'Gravity', 'C'),
+('Science', 'What is the chemical symbol for Gold?', 'Gd', 'Ag', 'Au', 'Fe', 'C'),
+('Science', 'Which gas is most abundant in Earth atmosphere?', 'Oxygen', 'CO2', 'Hydrogen', 'Nitrogen', 'D'),
+('Science', 'What is the speed of light approximately?', '3x10^8 m/s', '2x10^5 m/s', '5x10^6 m/s', '1x10^9 m/s', 'A'),
+
+-- MATH / COMMERCE
+('Math', 'If a shirt costs $20 after a 20% discount, what was the original price?', '$24', '$25', '$30', '$22', 'B'),
+('Math', 'Solve for x: 2x + 7 = 15', '3', '5', '4', '6', 'C'),
+('Math', 'Sequence: 2, 6, 12, 20, ?', '24', '28', '30', '32', 'C'),
+('Math', 'What is the square root of 225?', '12', '13', '15', '25', 'C'),
+('Math', 'What is 15% of 200?', '20', '25', '30', '35', 'C'),
+
+-- ARTS
+('Arts', 'Who painted the Mona Lisa?', 'Van Gogh', 'Picasso', 'Da Vinci', 'Claude Monet', 'C'),
+('Arts', 'Which Indian classical dance form originated in Kerala?', 'Kathak', 'Kathakali', 'Bharatanatyam', 'Odissi', 'B'),
+('Arts', 'Who is known as the Father of History?', 'Socrates', 'Herodotus', 'Aristotle', 'Plato', 'B'),
+('Arts', 'The Statue of Liberty was a gift from which country?', 'UK', 'Germany', 'France', 'Italy', 'C'),
+('Arts', 'Which of these is a famous work by William Shakespeare?', 'The Iliad', 'Hamlet', 'War and Peace', 'The Odyssey', 'B');
+
+```
+
+---
+
+### 4. How to Verify
+
+Type these commands in `psql` to see your work:
+
+* `\l` : List all databases (you should see `career_compass_new`).
+* `\c career_compass_new` : Connect to your new database.
+* `\dt` : List your tables (you should see `questions`).
+* `SELECT * FROM questions;` : View all your data.
+
+### Next Step for your Backend
+
+Since you are using **PostgreSQL**, you will need to update your **Node.js** backend. Instead of using `mongoose`, you should install the `pg` library or an ORM like `Sequelize` or `Prisma`.
+
+**Would you like the updated Node.js (Express) code to connect to this PostgreSQL database?**
