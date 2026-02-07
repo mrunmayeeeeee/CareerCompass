@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext", // Add this
-    "target": "esnext",
-    "rootDir": "./src",              // Uncomment this
-    "outDir": "./dist",             // Uncomment this
-    "esModuleInterop": true,         // Add this for better compatibility
-    "strict": true,
-    "skipLibCheck": true,
-    "verbatimModuleSyntax": false,    // Change this to false temporarily if errors persist
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022"
   }
 }

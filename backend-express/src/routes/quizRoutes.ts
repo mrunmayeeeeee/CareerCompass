@@ -4,10 +4,9 @@ import { QuizController } from '../controllers/QuizController.js';
 const router = Router();
 const quizController = new QuizController();
 
-// GET /api/quiz
-router.get('/', quizController.getQuiz);
-
-// POST /api/quiz/submit
-router.post('/submit', quizController.submitQuiz);
+// Use arrow functions to maintain 'this' context if needed
+router.get('/', (req, res) => quizController.getAllQuestions(req, res));
+router.post('/', (req, res) => quizController.addQuestion(req, res));
+router.delete('/:id', (req, res) => quizController.removeQuestion(req, res));
 
 export default router;

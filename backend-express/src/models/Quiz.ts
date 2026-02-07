@@ -1,19 +1,33 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+// Add CreateDateColumn to the list of imports
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
 
-@Entity()
-export class Quiz {
-  @PrimaryGeneratedColumn()
-  id!: number;
+@Entity("questions")
+export class QuizQuestion {
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ type: 'varchar' })
-  questionText!: string;
+    @Column()
+    category: string;
 
-  @Column('json')
-  options!: { optionText: string; associatedCareerId: number }[];
+    @Column({ name: "question_text", type: "text" })
+    questionText: string;
 
-  @CreateDateColumn()
-  createdAt!: Date;
+    @Column({ name: "option_a" })
+    optionA: string;
 
-  @UpdateDateColumn()
-  updatedAt!: Date;
+    @Column({ name: "option_b" })
+    optionB: string;
+
+    @Column({ name: "option_c" })
+    optionC: string;
+
+    @Column({ name: "option_d" })
+    optionD: string;
+
+    @Column({ name: "correct_option", length: 1 })
+    correctOption: string;
+
+    // This will now work because it is imported above
+    @CreateDateColumn({ name: "created_at" })
+    createdAt: Date;
 }

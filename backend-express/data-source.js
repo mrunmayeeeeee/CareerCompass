@@ -1,19 +1,24 @@
-import { DataSource } from 'typeorm';
-import { User } from './src/models/User.js';
-import { Career } from './src/models/Career.js';
-import { College } from './src/models/College.js';
-import { Course } from './src/models/Course.js';
-import { Quiz } from './src/models/Quiz.js';
+import "reflect-metadata";
+import { DataSource } from "typeorm";
+import dotenv from "dotenv";
+import { User } from "./models/User.js";
+import { Course } from "./models/Course.js";
+import { College } from "./models/College.js";
+import { Career } from "./models/Career.js";
+import { QuizQuestion } from "./models/Quiz.js";
+
+dotenv.config();
+
 export const AppDataSource = new DataSource({
-    type: 'postgres',
+    type: "postgres",
     host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT || '5432'),
+    port: Number(process.env.DB_PORT),
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: true, // Set to false in production
+    synchronize: true, // Auto-creates tables based on models - use false in production
     logging: false,
-    entities: [User, Career, College, Course, Quiz],
-    subscribers: [],
+    entities: [User, Course, College, Career, QuizQuestion],
     migrations: [],
+    subscribers: [],
 });

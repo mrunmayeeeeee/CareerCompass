@@ -1,22 +1,19 @@
-import { Repository } from 'typeorm';
-import { Quiz } from '../models/Quiz.js';
-import { AppDataSource } from '../data-source.js';
+import { AppDataSource } from "../data-source.js";
+import { QuizQuestion } from "../models/Quiz.js";
 
 export class QuizRepository {
-  private repository: Repository<Quiz>;
+    private db = AppDataSource.getRepository(QuizQuestion);
 
-  constructor() {
-    this.repository = AppDataSource.getRepository(Quiz);
-  }
+    async findAll() {
+        return await this.db.find();
+    }
 
-  // Fetch all questions with their associated career paths
-  async findAllQuestions() {
-    return await this.repository.find();
-  }
+    async create(data: Partial<QuizQuestion>) {
+        const newQuestion = this.db.create(data);
+        return await this.db.save(newQuestion);
+    }
 
-  // Admin: Mechanism to dynamically deliver/update quiz content
-  async createQuestion(questionData: Partial<Quiz>) {
-    const question = this.repository.create(questionData);
-    return await this.repository.save(question);
-  }
+    async delete(id: number) {
+        return await this.db.delete(id);
+    }
 }
