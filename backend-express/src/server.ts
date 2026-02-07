@@ -2,11 +2,15 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./data-source.js";
+
 import quizRoutes from "./routes/quizRoutes.js";
+import userRoutes from "./routes/userRoutes.js"; 
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api/users", userRoutes); 
 
 // Routes
 app.use("/api/quiz", quizRoutes);
