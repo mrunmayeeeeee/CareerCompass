@@ -5,11 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-  "start": "node dist/server.js",
-  "dev": "nodemon --exec tsx src/server.ts",
-  "build": "tsc",
-  "seed": "tsx seed.js"
-},
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec tsx src/server.ts",
+    "build": "tsc",
+    "seed": "tsx seed.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,15 +17,15 @@
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "pg": "^8.11.3",
-    "reflect-metadata": "^0.2.1",
-    "typeorm": "^0.3.20"
+    "pg": "^8.18.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.10",
-    "@types/pg": "^8.10.9",
+    "@types/pg": "^8.16.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
