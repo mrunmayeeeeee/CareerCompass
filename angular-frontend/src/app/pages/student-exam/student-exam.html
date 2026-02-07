@@ -1,30 +1,83 @@
-<app-header></app-header>
-
-<main style="max-width: 800px; margin: 40px auto; padding: 20px;">
-  <h1 style="color: #00529b;">Aptitude Assessment</h1>
-
-  @if (!submitted) {
-    <div>
-      @for (q of questions; track q.id; let i = $index) {
-        <div class="quiz-card">
-          <h3>{{i + 1}}. {{q.questionText}}</h3>
-          <div class="options">
-            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'A'"> {{q.optionA}}</label>
-            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'B'"> {{q.optionB}}</label>
-            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'C'"> {{q.optionC}}</label>
-            <label><input type="radio" [name]="'q'+q.id" (change)="userAnswers[q.id!] = 'D'"> {{q.optionD}}</label>
-          </div>
-        </div>
-      }
-      <button (click)="submitExam()" class="btn-submit">Finish Test</button>
+<div class="exam-container">
+  
+  <header>
+    <h1>Career Compass Exam</h1>
+    <div class="user-info">
+      <span>Student: {{ auth.getUsername() || 'Guest' }}</span>
+      <button (click)="auth.logout()" class="btn-logout">Logout</button>
     </div>
-  } @else {
-    <div class="results-box">
-      <h2>Exam Results</h2>
-      <p>You scored <strong>{{score}}</strong> out of {{questions.length}}</p>
-      <button (click)="submitted = false" class="btn-retry">Try Again</button>
-    </div>
-  }
-</main>
+  </header>
 
-<app-footer></app-footer>
+  <p style="font-size: 10px; color: gray;">Debug: Loaded {{ questions.length }} questions</p>
+
+  <div *ngIf="questions.length === 0" class="loading">
+    <p>Loading Questions... (Please wait)</p>
+  </div>
+
+  <div *ngIf="!showResult && questions.length > 0" class="question-card">
+    <div class="progress">
+      Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+    </div>
+
+    <h2 class="q-text">
+      {{ questions[currentQuestionIndex].questionText }}
+    </h2>
+
+    <div class="options-list">
+      <button 
+        *ngFor="let opt of ['A', 'B', 'C', 'D']" 
+        (click)="selectOption(questions[currentQuestionIndex].id!, opt)"
+        [class.selected]="userAnswers.get(questions[currentQuestionIndex].id!) === opt"
+        class="option-btn">
+        
+        <span class="opt-label">{{ opt }}</span>
+        
+        <span *ngIf="opt === 'A'">{{ questions[currentQuestionIndex].optionA }}</span>
+        <span *ngIf="opt === 'B'">{{ questions[currentQuestionIndex].optionB }}</span>
+        <span *ngIf="opt === 'C'">{{ questions[currentQuestionIndex].optionC }}</span>
+        <span *ngIf="opt === 'D'">{{ questions[currentQuestionIndex].optionD }}</span>
+      </button>
+    </div>
+
+    <div class="actions">
+      <button (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0" class="btn-secondary">Previous</button>
+      
+      <button *ngIf="currentQuestionIndex < questions.length - 1" 
+              (click)="nextQuestion()" 
+              class="btn-primary">
+        Next
+      </button>
+
+      <button *ngIf="currentQuestionIndex === questions.length - 1" 
+              (click)="submitExam()" 
+              class="btn-submit">
+        Submit Exam
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showResult" class="result-card">
+    <h2>🎉 Exam Completed!</h2>
+    <div class="score-box">
+      <p>Your Score: <strong>{{ score }} / {{ questions.length }}</strong></p>
+    </div>
+
+    <div class="recommendation">
+      <h3>Recommended Stream:</h3>
+      <div class="stream-badge">{{ recommendedStream }}</div>
+      <p>Based on your aptitude, {{ recommendedStream }} is the best fit!</p>
+    </div>
+
+    <div class="breakdown">
+      <h4>Score Breakdown:</h4>
+      <ul>
+        <li>Science: {{ categoryScores['Science'] }}</li>
+        <li>Commerce: {{ categoryScores['Commerce'] }}</li>
+        <li>Arts: {{ categoryScores['Arts'] }}</li>
+      </ul>
+    </div>
+
+    <button (click)="showResult = false; currentQuestionIndex = 0; score = 0" class="btn-restart">Retake Test</button>
+  </div>
+
+</div>

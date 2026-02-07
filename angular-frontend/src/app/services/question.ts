@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Question {
   id?: number;
   category: string;
-  questionText: string;
+  questionText: string;  
   optionA: string;
   optionB: string;
   optionC: string;
