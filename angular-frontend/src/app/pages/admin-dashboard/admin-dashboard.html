@@ -1,1 +1,14 @@
-<p>admin-dashboard works!</p>
+<nav class="tabs">
+  <button 
+    *ngIf="auth.isAdmin()" 
+    [class.active]="activeTab === 'users'" 
+    (click)="activeTab = 'users'">
+    Manage Users
+  </button>
+  
+  <button 
+    [class.active]="activeTab === 'quiz'" 
+    (click)="activeTab = 'quiz'">
+    Manage Quiz
+  </button>
+</nav>
