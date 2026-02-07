@@ -27,13 +27,34 @@ export class UserController {
         }
     }
 
-    // --- LOGIN ---
+   // --- LOGIN ---
     async login(req: Request, res: Response) {
         try {
             const { email, password } = req.body;
+            
+            // DEBUG LOG 1: What did the frontend send?
+            console.log("------------------------------------------------");
+            console.log("LOGIN ATTEMPT:");
+            console.log("Email received:", email);
+            console.log("Password received:", password);
+
             const user = await this.userRepo.findOneBy({ email });
 
-            if (!user || !(await bcrypt.compare(password, user.password))) {
+            // DEBUG LOG 2: Did we find the user?
+            if (!user) {
+                console.log("❌ User NOT found in DB");
+                return res.status(401).json({ message: "Invalid email or password" });
+            }
+            console.log("✅ User found:", user.username);
+            console.log("Stored Hash:", user.password);
+
+            const isMatch = await bcrypt.compare(password, user.password);
+            
+            // DEBUG LOG 3: Did the password match?
+            console.log("Password Match Result:", isMatch);
+
+            if (!isMatch) {
+                console.log("❌ Password did NOT match");
                 return res.status(401).json({ message: "Invalid email or password" });
             }
 
@@ -43,12 +64,16 @@ export class UserController {
                 { expiresIn: '1d' }
             );
 
+            console.log("✅ Login Successful, sending token...");
+            console.log("------------------------------------------------");
+
             res.json({ token, role: user.role, username: user.username });
         } catch (error: any) {
+            console.error("Login Error:", error);
             res.status(500).json({ message: "Login failed" });
         }
     }
-
+    
     // --- ADMIN: GET ALL USERS ---
     async getAllUsers(req: Request, res: Response) {
         try {
