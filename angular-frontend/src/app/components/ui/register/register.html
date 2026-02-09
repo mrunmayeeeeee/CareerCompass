@@ -1,17 +1,59 @@
 <div class="auth-container">
-  <h2>Create Account</h2>
-  <form (submit)="onRegister()">
-    <input [(ngModel)]="user.username" name="username" placeholder="Username" required>
-    <input [(ngModel)]="user.email" name="email" type="email" placeholder="Email" required>
-    <input [(ngModel)]="user.password" name="password" type="password" placeholder="Password" required>
-    
-    <select [(ngModel)]="user.role" name="role">
-      <option value="student">Student</option>
-      <option value="faculty">Faculty</option>
-      <option value="admin">Admin</option>
-    </select>
+  <div class="header-text">
+    <h2>Join Career Compass 🚀</h2>
+    <p class="subtitle">Create your account to start your journey.</p>
+  </div>
 
-    <button type="submit">Register</button>
+  <form (submit)="onRegister()" class="auth-form">
+    
+    <div class="input-group">
+      <label for="username">Full Name</label>
+      <input 
+        [(ngModel)]="user.username" 
+        name="username" 
+        placeholder="e.g. John Doe" 
+        required 
+        class="form-control">
+    </div>
+
+    <div class="input-group">
+      <label for="email">Email Address</label>
+      <input 
+        [(ngModel)]="user.email" 
+        name="email" 
+        type="email" 
+        placeholder="e.g. student@example.com" 
+        required 
+        class="form-control">
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input 
+        [(ngModel)]="user.password" 
+        name="password" 
+        type="password" 
+        placeholder="Create a strong password" 
+        required 
+        class="form-control">
+    </div>
+
+    <div class="input-group">
+      <label for="role">I am a...</label>
+      <select 
+        [(ngModel)]="user.role" 
+        name="role" 
+        class="form-control custom-select">
+        <option value="student">Student 🎓</option>
+        <option value="faculty">Faculty 🏫</option>
+        <option value="admin">Admin 🛡️</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-primary">Create Account</button>
   </form>
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
+
+  <div class="auth-footer">
+    <p>Already have an account? <a routerLink="/login" class="link">Sign In</a></p>
+  </div>
 </div>

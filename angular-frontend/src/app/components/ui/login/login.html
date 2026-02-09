@@ -1,10 +1,41 @@
 <div class="auth-container">
-  <h2>Login</h2>
-  <form (submit)="onLogin()">
-    <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required>
-    <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required>
-    <button type="submit">Login</button>
+  <div class="header-text">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Enter your credentials to access your dashboard.</p>
+  </div>
+
+  <form (submit)="onLogin()" class="auth-form">
+    
+    <div class="input-group">
+      <label for="email">Email Address</label>
+      <input 
+        [(ngModel)]="email" 
+        name="email" 
+        type="email" 
+        placeholder="e.g. student@example.com" 
+        required 
+        class="form-control">
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input 
+        [(ngModel)]="password" 
+        name="password" 
+        type="password" 
+        placeholder="••••••••" 
+        required 
+        class="form-control">
+    </div>
+
+    <button type="submit" class="btn-primary">Sign In</button>
   </form>
-  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-  <p>New here? <a routerLink="/register">Register</a></p>
+
+  <div class="error-box" *ngIf="errorMessage">
+    <span>⚠️ {{ errorMessage }}</span>
+  </div>
+
+  <div class="auth-footer">
+    <p>New to Career Compass? <a routerLink="/register" class="link">Create Account</a></p>
+  </div>
 </div>

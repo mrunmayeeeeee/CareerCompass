@@ -1,0 +1,21 @@
+.footer {
+  background-color: #004085; /* Dark Blue */
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: auto; /* Pushes footer to bottom if page is short */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.social-links span {
+  margin: 0 10px;
+  color: #ffc107; /* Yellow Accent */
+  cursor: pointer;
+  font-size: 0.9rem;
+}

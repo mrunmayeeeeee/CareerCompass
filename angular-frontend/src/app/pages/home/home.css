@@ -1,0 +1,100 @@
+/* Layout Wrapper to ensure Footer stays at bottom */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.home-container {
+  flex: 1; /* Takes up remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Professional Gradient: White to Light Blue */
+  background: linear-gradient(180deg, #ffffff 0%, #e3f2fd 100%);
+  padding: 40px 20px;
+}
+
+.content-wrapper {
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* Typography & Text */
+.welcome-section {
+  flex: 1;
+  max-width: 600px;
+}
+
+.welcome-section h1 {
+  font-size: 3.5rem;
+  color: #004085; /* Dark Blue */
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #ffc107; /* Yellow Accent */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.welcome-section p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* Feature List */
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #333;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.feature-item .icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+
+/* Login Box Styling */
+.login-wrapper {
+  flex: 0 0 400px;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  /* Soft Blue Shadow */
+  box-shadow: 0 15px 35px rgba(0, 64, 133, 0.15); 
+  border-top: 5px solid #ffc107; /* Yellow Top Border */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .welcome-section {
+    padding-right: 0;
+    margin-bottom: 50px;
+  }
+
+  .feature-item {
+    justify-content: center; /* Center align features on mobile */
+  }
+
+  .login-wrapper {
+    width: 100%;
+    max-width: 400px;
+  }
+}
