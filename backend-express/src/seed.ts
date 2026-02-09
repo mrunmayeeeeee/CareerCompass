@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { AppDataSource } from "./data-source.js";
 import { User } from "./models/User.js";
-import { Quiz } from "./models/Quiz.js"; // Ensure this matches your Entity name
+import { QuizQuestion } from "./models/Quiz.js";
 import bcrypt from "bcrypt";
 
 const seedDatabase = async () => {
@@ -10,12 +10,12 @@ const seedDatabase = async () => {
     console.log("🌱 Connected to Database. Starting Seed...");
 
     const userRepo = AppDataSource.getRepository(User);
-    const quizRepo = AppDataSource.getRepository(Quiz);
+    const quizRepo = AppDataSource.getRepository(QuizQuestion);
 
     // 1. CLEAR EXISTING DATA (Optional: careful in production!)
     console.log("🧹 Clearing old data...");
-    await quizRepo.delete({});
-    await userRepo.delete({});
+    await quizRepo.clear();
+    await userRepo.clear();
 
     // 2. CREATE USERS
     console.log("👤 Creating Users...");
