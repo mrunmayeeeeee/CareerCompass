@@ -1,36 +1,39 @@
 import { Request, Response } from 'express';
-import { CourseService } from '../services/CourseService.js';
-
-const courseService = new CourseService();
+import { AppDataSource } from '../data-source.js';
+import { Course } from '../models/Course.js';
 
 export class CourseController {
-  async getCoursesByStream(req: Request, res: Response) {
+  
+  // 1. Fetch courses for a specific stream (Science, Commerce, Arts)
+  static getCoursesByStream = async (req: Request, res: Response) => {
+   const stream = req.params.stream as string;
+    
     try {
-      const stream = req.params.stream as string;
-      const courses = await courseService.getCoursesByStream(stream);
+      const courseRepo = AppDataSource.getRepository(Course);
+      
+      const courses = await courseRepo.find({
+        where: { stream: stream } 
+      });
+      
+      if (courses.length === 0) {
+        return res.status(404).json({ message: `No courses found for stream: ${stream}` });
+      }
+
+      res.status(200).json(courses);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      res.status(500).json({ message: "Error fetching courses" });
+    }
+  };
+
+  // 2. Fetch ALL courses (Optional, but good for debugging)
+  static getAllCourses = async (req: Request, res: Response) => {
+    try {
+      const courseRepo = AppDataSource.getRepository(Course);
+      const courses = await courseRepo.find();
       res.json(courses);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching all courses" });
     }
-  }
-
-  async getCourseById(req: Request, res: Response) {
-    try {
-      const courseId = parseInt(req.params.id as string);
-      const course = await courseService.getCourseDetails(courseId);
-      res.json(course);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
-    }
-  }
-
-  async compareCourses(req: Request, res: Response) {
-    try {
-      const { courseId1, courseId2 } = req.body;
-      const comparison = await courseService.compareCourses(parseInt(courseId1), parseInt(courseId2));
-      res.json(comparison);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  }
+  };
 }

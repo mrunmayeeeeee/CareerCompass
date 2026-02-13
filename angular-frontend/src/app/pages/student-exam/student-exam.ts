@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { QuestionService, Question } from '../../services/question';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-student-exam',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './student-exam.html',
   styleUrls: ['./student-exam.css']
 })
