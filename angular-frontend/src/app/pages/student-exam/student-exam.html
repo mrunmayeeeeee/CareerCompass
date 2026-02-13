@@ -76,8 +76,18 @@
         <li>Arts: {{ categoryScores['Arts'] }}</li>
       </ul>
     </div>
-
     <button (click)="showResult = false; currentQuestionIndex = 0; score = 0" class="btn-restart">Retake Test</button>
   </div>
 
+    <div class="recommendation">
+      <h3>Recommended Stream:</h3>
+      <div class="stream-badge">{{ recommendedStream }}</div>
+      <p>Based on your aptitude, {{ recommendedStream }} is the best fit!</p>
+
+      <button 
+        [routerLink]="['/career-path', recommendedStream]" 
+        class="btn-explore">
+        See {{ recommendedStream }} Career Options ➜
+      </button>
+    </div>
 </div>

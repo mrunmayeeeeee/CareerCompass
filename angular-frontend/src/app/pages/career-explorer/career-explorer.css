@@ -1,0 +1,35 @@
+.explorer-container { padding: 40px; min-height: 100vh; font-family: 'Segoe UI', sans-serif; }
+
+/* Dynamic Backgrounds based on Stream */
+.science { background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%); }
+.commerce { background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%); }
+.arts { background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%); }
+
+header { text-align: center; margin-bottom: 40px; }
+h1 { font-size: 2.5rem; color: #333; }
+.highlight { color: #007bff; text-decoration: underline; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.course-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.course-card:hover { transform: translateY(-5px); }
+
+.card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
+.badge { background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+
+.card-body p { margin: 8px 0; color: #555; }
+.scope { color: #2c3e50; font-style: italic; }
+
+.btn-back { background: transparent; border: 2px solid #333; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-weight: bold; margin-top: 20px;}

@@ -35,6 +35,7 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { StudentExamComponent } from './pages/student-exam/student-exam.js';
 import { Home } from './pages/home/home.js'; // <--- Import Home
 import { authGuard } from './guard/auth-guard.js';
+import { CareerExplorer } from './pages/career-explorer/career-explorer.js';
 
 export const routes: Routes = [
   // 1. Default Route now shows Home Page (which will contain Login)
@@ -42,7 +43,7 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
+  { path: 'career-path/:stream', component: CareerExplorer, canActivate: [authGuard] },
   // Protected Admin Route
   {
     path: 'admin',

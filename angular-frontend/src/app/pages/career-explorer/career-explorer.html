@@ -1,1 +1,25 @@
-<p>career-explorer works!</p>
+<div class="explorer-container" [ngClass]="stream.toLowerCase()">
+  <header>
+    <h1>🚀 Career Paths for <span class="highlight">{{ stream }}</span></h1>
+    <p>Based on your aptitude, here are the top courses you should consider!</p>
+    <button (click)="goBack()" class="btn-back">← Back to Exam</button>
+  </header>
+
+  <div *ngIf="loading" class="loading">Loading Opportunities...</div>
+
+  <div class="cards-grid">
+    <div *ngFor="let course of courses" class="course-card">
+      <div class="card-header">
+        <h3>{{ course.courseName }}</h3>
+        <span class="badge">{{ course.durationYears }} Years</span>
+      </div>
+      
+      <div class="card-body">
+        <p><strong>💰 Fees:</strong> {{ course.fees }}</p>
+        <p><strong>📋 Eligibility:</strong> {{ course.eligibilityCriteria }}</p>
+        <hr>
+        <p class="scope"><strong>🌟 Future Scope:</strong><br> {{ course.futureScope }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { AppDataSource } from "./data-source.js";
 import { User } from "./models/User.js";
 import { QuizQuestion } from "./models/Quiz.js";
 import bcrypt from "bcrypt";
+import { Course } from "./models/Course.js";
 
 const seedDatabase = async () => {
   try {
@@ -52,6 +53,27 @@ const seedDatabase = async () => {
 
     await quizRepo.save(questions);
     console.log("✅ Questions Created!");
+
+    console.log("📚 Creating Courses...");
+   const courseRepo = AppDataSource.getRepository(Course); // <--- 'Course' is the Class Entity
+    await courseRepo.clear(); // <--- This wipes the table cleanly // Clear old courses
+
+    const courses = [
+      // SCIENCE
+      { courseName: "B.Tech in Computer Science", stream: "Science", durationYears: 4, fees: "₹1.5L - ₹4L per year", eligibilityCriteria: "12th Science with PCM > 60%", futureScope: "Software Engineer, Data Scientist, AI Specialist" },
+      { courseName: "MBBS (Medicine)", stream: "Science", durationYears: 5, fees: "₹50k - ₹20L per year", eligibilityCriteria: "12th Science with PCB + NEET", futureScope: "Doctor, Surgeon, Medical Researcher" },
+      { courseName: "B.Sc in Biotechnology", stream: "Science", durationYears: 3, fees: "₹50k - ₹1.5L per year", eligibilityCriteria: "12th Science (PCB/PCM)", futureScope: "Research Analyst, Lab Technician" },
+
+      // COMMERCE
+      { courseName: "B.Com (Hons)", stream: "Commerce", durationYears: 3, fees: "₹20k - ₹1L per year", eligibilityCriteria: "12th Commerce > 50%", futureScope: "Accountant, Banker, Tax Consultant" },
+      { courseName: "CA (Chartered Accountancy)", stream: "Commerce", durationYears: 5, fees: "Varies", eligibilityCriteria: "12th + CPT Exam", futureScope: "Auditor, Finance Manager, CFO" },
+      { courseName: "BBA (Business Admin)", stream: "Commerce", durationYears: 3, fees: "₹1L - ₹3L per year", eligibilityCriteria: "12th Any Stream", futureScope: "HR Manager, Marketing Executive" },
+
+      // ARTS
+      { courseName: "BA in Psychology", stream: "Arts", durationYears: 3, fees: "₹30k - ₹1L per year", eligibilityCriteria: "12th Arts", futureScope: "Psychologist, Counselor, HR" },
+      { courseName: "BA in Journalism", stream: "Arts", durationYears: 3, fees: "₹50k - ₹2L per year", eligibilityCriteria: "12th Any Stream", futureScope: "Journalist, News Anchor, Content Writer" },
+      { courseName: "LLB (Law)", stream: "Arts", durationYears: 5, fees: "₹1L - ₹3L per year", eligibilityCriteria: "12th + CLAT", futureScope: "Lawyer, Judge, Legal Advisor" },
+    ];
 
     console.log("🚀 Database Seeded Successfully!");
     process.exit(0);
