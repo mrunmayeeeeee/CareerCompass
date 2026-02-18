@@ -75,6 +75,9 @@ const seedDatabase = async () => {
       { courseName: "LLB (Law)", stream: "Arts", durationYears: 5, fees: "₹1L - ₹3L per year", eligibilityCriteria: "12th + CLAT", futureScope: "Lawyer, Judge, Legal Advisor" },
     ];
 
+    await courseRepo.save(courses); 
+    console.log("✅ Courses Created!");
+    
     console.log("🚀 Database Seeded Successfully!");
     process.exit(0);
   } catch (error) {
