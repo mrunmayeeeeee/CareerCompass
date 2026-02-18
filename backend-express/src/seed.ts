@@ -55,29 +55,261 @@ const seedDatabase = async () => {
     console.log("✅ Questions Created!");
 
     console.log("📚 Creating Courses...");
-   const courseRepo = AppDataSource.getRepository(Course); // <--- 'Course' is the Class Entity
+    const courseRepo = AppDataSource.getRepository(Course); // <--- 'Course' is the Class Entity
     await courseRepo.clear(); // <--- This wipes the table cleanly // Clear old courses
 
+
     const courses = [
-      // SCIENCE
-      { courseName: "B.Tech in Computer Science", stream: "Science", durationYears: 4, fees: "₹1.5L - ₹4L per year", eligibilityCriteria: "12th Science with PCM > 60%", futureScope: "Software Engineer, Data Scientist, AI Specialist" },
-      { courseName: "MBBS (Medicine)", stream: "Science", durationYears: 5, fees: "₹50k - ₹20L per year", eligibilityCriteria: "12th Science with PCB + NEET", futureScope: "Doctor, Surgeon, Medical Researcher" },
-      { courseName: "B.Sc in Biotechnology", stream: "Science", durationYears: 3, fees: "₹50k - ₹1.5L per year", eligibilityCriteria: "12th Science (PCB/PCM)", futureScope: "Research Analyst, Lab Technician" },
+      // ================= SCIENCE STREAM =================
+      {
+        courseName: "B.Tech in Computer Science",
+        stream: "Science",
+        durationYears: 4,
+        fees: "₹1.5L - ₹4L per year",
+        eligibilityCriteria: "12th Science with PCM > 60%",
+        futureScope: "Software Engineer, Data Scientist, AI Specialist"
+      },
+      {
+        courseName: "MBBS (Medicine)",
+        stream: "Science",
+        durationYears: 5,
+        fees: "₹50k - ₹25L per year",
+        eligibilityCriteria: "12th Science with PCB + NEET Rank",
+        futureScope: "Doctor, Surgeon, Medical Researcher"
+      },
+      {
+        courseName: "B.Arch (Architecture)",
+        stream: "Science",
+        durationYears: 5,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th PCM + NATA Score",
+        futureScope: "Architect, Urban Planner, Interior Designer"
+      },
+      {
+        courseName: "B.Sc in Biotechnology",
+        stream: "Science",
+        durationYears: 3,
+        fees: "₹50k - ₹1.5L per year",
+        eligibilityCriteria: "12th Science (PCB/PCM)",
+        futureScope: "Research Analyst, Lab Technician, Bio-Manufacturing"
+      },
+      {
+        courseName: "Commercial Pilot Training (CPL)",
+        stream: "Science",
+        durationYears: 2,
+        fees: "₹25L - ₹40L (Total)",
+        eligibilityCriteria: "12th Science (PCM) + Medical Fitness",
+        futureScope: "Airline Pilot, Cargo Pilot, Flight Instructor"
+      },
+      {
+        courseName: "B.Pharma (Pharmacy)",
+        stream: "Science",
+        durationYears: 4,
+        fees: "₹80k - ₹2L per year",
+        eligibilityCriteria: "12th Science (PCB/PCM)",
+        futureScope: "Pharmacist, Drug Inspector, R&D Scientist"
+      },
+      {
+        courseName: "B.Sc in Agriculture",
+        stream: "Science",
+        durationYears: 4,
+        fees: "₹30k - ₹1L per year",
+        eligibilityCriteria: "12th Science (PCB)",
+        futureScope: "Agriculture Officer, Farm Manager, Soil Scientist"
+      },
+      {
+        courseName: "BCA (Computer Applications)",
+        stream: "Science",
+        durationYears: 3,
+        fees: "₹60k - ₹1.5L per year",
+        eligibilityCriteria: "12th Any Stream (Maths preferred)",
+        futureScope: "Web Developer, System Admin, App Developer"
+      },
+      {
+        courseName: "B.Sc in Nursing",
+        stream: "Science",
+        durationYears: 4,
+        fees: "₹50k - ₹1.5L per year",
+        eligibilityCriteria: "12th Science (PCB)",
+        futureScope: "Registered Nurse, Healthcare Administrator"
+      },
+      {
+        courseName: "B.Sc in Data Science",
+        stream: "Science",
+        durationYears: 3,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th Science with Maths/Stats",
+        futureScope: "Data Analyst, Business Intelligence, ML Engineer"
+      },
 
-      // COMMERCE
-      { courseName: "B.Com (Hons)", stream: "Commerce", durationYears: 3, fees: "₹20k - ₹1L per year", eligibilityCriteria: "12th Commerce > 50%", futureScope: "Accountant, Banker, Tax Consultant" },
-      { courseName: "CA (Chartered Accountancy)", stream: "Commerce", durationYears: 5, fees: "Varies", eligibilityCriteria: "12th + CPT Exam", futureScope: "Auditor, Finance Manager, CFO" },
-      { courseName: "BBA (Business Admin)", stream: "Commerce", durationYears: 3, fees: "₹1L - ₹3L per year", eligibilityCriteria: "12th Any Stream", futureScope: "HR Manager, Marketing Executive" },
+      // ================= COMMERCE STREAM =================
+      {
+        courseName: "B.Com (Hons)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹20k - ₹1L per year",
+        eligibilityCriteria: "12th Commerce > 50%",
+        futureScope: "Accountant, Banker, Tax Consultant"
+      },
+      {
+        courseName: "CA (Chartered Accountancy)",
+        stream: "Commerce",
+        durationYears: 5,
+        fees: "Varies (Exam based)",
+        eligibilityCriteria: "12th + CPT/Foundation Exam",
+        futureScope: "Auditor, Finance Manager, CFO, Tax Advisor"
+      },
+      {
+        courseName: "CS (Company Secretary)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "Varies (Exam based)",
+        eligibilityCriteria: "12th + CSEET Exam",
+        futureScope: "Corporate Governance, Legal Advisor, Compliance Officer"
+      },
+      {
+        courseName: "BBA (Business Admin)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th Any Stream",
+        futureScope: "HR Manager, Marketing Executive, Entrepreneur"
+      },
+      {
+        courseName: "BMS (Management Studies)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹50k - ₹2L per year",
+        eligibilityCriteria: "12th Commerce > 50%",
+        futureScope: "Business Analyst, Operations Manager, Consultant"
+      },
+      {
+        courseName: "CMA (Cost Management Accountant)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "Varies (Exam based)",
+        eligibilityCriteria: "12th + Foundation Course",
+        futureScope: "Cost Accountant, Financial Controller, Analyst"
+      },
+      {
+        courseName: "B.Com in Banking & Insurance",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹40k - ₹1L per year",
+        eligibilityCriteria: "12th Commerce",
+        futureScope: "Bank PO, Insurance Agent, Loan Officer"
+      },
+      {
+        courseName: "B.Stat (Statistics)",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹20k - ₹80k per year",
+        eligibilityCriteria: "12th with Maths/Stats",
+        futureScope: "Statistician, Risk Analyst, Actuary"
+      },
+      {
+        courseName: "Certified Financial Planner (CFP)",
+        stream: "Commerce",
+        durationYears: 1,
+        fees: "₹40k - ₹60k (Certification)",
+        eligibilityCriteria: "12th Pass",
+        futureScope: "Wealth Manager, Portfolio Manager, Investment Advisor"
+      },
+      {
+        courseName: "B.Com with ACCA",
+        stream: "Commerce",
+        durationYears: 3,
+        fees: "₹1.5L - ₹3L per year",
+        eligibilityCriteria: "12th Commerce",
+        futureScope: "Global Accountant, Audit Associate, Financial Consultant"
+      },
 
-      // ARTS
-      { courseName: "BA in Psychology", stream: "Arts", durationYears: 3, fees: "₹30k - ₹1L per year", eligibilityCriteria: "12th Arts", futureScope: "Psychologist, Counselor, HR" },
-      { courseName: "BA in Journalism", stream: "Arts", durationYears: 3, fees: "₹50k - ₹2L per year", eligibilityCriteria: "12th Any Stream", futureScope: "Journalist, News Anchor, Content Writer" },
-      { courseName: "LLB (Law)", stream: "Arts", durationYears: 5, fees: "₹1L - ₹3L per year", eligibilityCriteria: "12th + CLAT", futureScope: "Lawyer, Judge, Legal Advisor" },
+      // ================= ARTS & HUMANITIES STREAM =================
+      {
+        courseName: "BA in Psychology",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹30k - ₹1L per year",
+        eligibilityCriteria: "12th Arts/Any Stream",
+        futureScope: "Psychologist, Counselor, HR Specialist"
+      },
+      {
+        courseName: "BA in Journalism & Mass Comm",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹50k - ₹2L per year",
+        eligibilityCriteria: "12th Any Stream",
+        futureScope: "Journalist, News Anchor, Content Writer, Editor"
+      },
+      {
+        courseName: "LLB (Law)",
+        stream: "Arts",
+        durationYears: 5,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th + CLAT Score",
+        futureScope: "Lawyer, Judge, Corporate Legal Advisor"
+      },
+      {
+        courseName: "B.Des (Fashion Design)",
+        stream: "Arts",
+        durationYears: 4,
+        fees: "₹1.5L - ₹4L per year",
+        eligibilityCriteria: "12th + NIFT/Entrance Exam",
+        futureScope: "Fashion Designer, Stylist, Textile Manager"
+      },
+      {
+        courseName: "BHM (Hotel Management)",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th Any Stream",
+        futureScope: "Hotel Manager, Chef, Event Coordinator"
+      },
+      {
+        courseName: "BA in English Literature",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹20k - ₹60k per year",
+        eligibilityCriteria: "12th Any Stream",
+        futureScope: "Writer, Teacher, Editor, Public Relations"
+      },
+      {
+        courseName: "BFA (Fine Arts)",
+        stream: "Arts",
+        durationYears: 4,
+        fees: "₹30k - ₹1L per year",
+        eligibilityCriteria: "12th + Aptitude Test",
+        futureScope: "Artist, Illustrator, Art Director, UX Designer"
+      },
+      {
+        courseName: "BA in Political Science",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹20k - ₹50k per year",
+        eligibilityCriteria: "12th Arts",
+        futureScope: "Civil Services (IAS/IPS), Policy Analyst, Politician"
+      },
+      {
+        courseName: "BA in Animation & VFX",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹1L - ₹3L per year",
+        eligibilityCriteria: "12th Any Stream + Creative Portfolio",
+        futureScope: "Animator, VFX Artist, Game Designer"
+      },
+      {
+        courseName: "BSW (Social Work)",
+        stream: "Arts",
+        durationYears: 3,
+        fees: "₹20k - ₹50k per year",
+        eligibilityCriteria: "12th Any Stream",
+        futureScope: "NGO Manager, Social Worker, Community Developer"
+      },
     ];
 
-    await courseRepo.save(courses); 
+    await courseRepo.save(courses);
     console.log("✅ Courses Created!");
-    
+
     console.log("🚀 Database Seeded Successfully!");
     process.exit(0);
   } catch (error) {
