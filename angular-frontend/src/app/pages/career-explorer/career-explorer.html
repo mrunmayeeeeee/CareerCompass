@@ -1,17 +1,29 @@
 <div class="explorer-container" [ngClass]="stream.toLowerCase()">
   <header>
     <h1>🚀 Career Paths for <span class="highlight">{{ stream }}</span></h1>
-    <p>Based on your aptitude, here are the top courses you should consider!</p>
+    <p>Select up to 3 courses to compare them side-by-side.</p>
     <button (click)="goBack()" class="btn-back">← Back to Exam</button>
   </header>
 
   <div *ngIf="loading" class="loading">Loading Opportunities...</div>
-  <div class="cards-grid">
-    <div *ngFor="let course of courses" class="course-card">
+
+  <div *ngIf="!loading" class="cards-grid">
+    <div 
+      *ngFor="let course of courses" 
+      class="course-card" 
+      [class.active-card]="isSelected(course)">
+      
       <div class="card-header">
-        <h3>{{ course.courseName }}</h3>
+        <div class="header-top">
+          <h3>{{ course.courseName }}</h3>
+          <div class="checkbox-wrapper" (click)="toggleCompare(course)">
+            <input type="checkbox" [checked]="isSelected(course)" readonly>
+            <span>Compare</span>
+          </div>
+        </div>
         <span class="badge">{{ course.durationYears }} Years</span>
       </div>
+      
       <div class="card-body">
         <p><strong>💰 Fees:</strong> {{ course.fees }}</p>
         <p><strong>📋 Eligibility:</strong> {{ course.eligibilityCriteria }}</p>
@@ -20,4 +32,48 @@
       </div>
     </div>
   </div>
+
+  <div class="floating-bar" *ngIf="selectedCourses.length > 0">
+    <span>{{ selectedCourses.length }} Courses Selected</span>
+    <button (click)="openComparison()" class="btn-compare-now">Compare Now ⚔️</button>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showCompareModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Course Comparison</h2>
+        <button class="btn-close" (click)="closeComparison()">✖</button>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th *ngFor="let course of selectedCourses">{{ course.courseName }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Duration</strong></td>
+              <td *ngFor="let course of selectedCourses">{{ course.durationYears }} Years</td>
+            </tr>
+            <tr>
+              <td><strong>Fees</strong></td>
+              <td *ngFor="let course of selectedCourses">{{ course.fees }}</td>
+            </tr>
+            <tr>
+              <td><strong>Eligibility</strong></td>
+              <td *ngFor="let course of selectedCourses">{{ course.eligibilityCriteria }}</td>
+            </tr>
+            <tr>
+              <td><strong>Future Scope</strong></td>
+              <td *ngFor="let course of selectedCourses" class="scope-cell">{{ course.futureScope }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </div>

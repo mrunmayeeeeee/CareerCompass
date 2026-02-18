@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,47 +10,73 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './career-explorer.html',
   styleUrls: ['./career-explorer.css']
 })
-export class CareerExplorer implements OnInit {
+export class CareerExplorerComponent implements OnInit {
   stream: string = '';
   courses: any[] = [];
   loading = true;
+  
+  // New Comparison Logic
+  selectedCourses: any[] = [];
+  showCompareModal = false;
 
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, 
     private http: HttpClient,
     private router: Router,
-    private cd: ChangeDetectorRef // <--- Inject it here
-  ) { }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    // 1. Get the stream name from URL (e.g. "Science")
     this.stream = this.route.snapshot.paramMap.get('stream') || '';
-
-    // 2. Fetch data
-    if (this.stream) {
-      this.fetchCourses();
-    } else {
-      this.loading = false; // No stream? Stop loading.
-    }
+    if (this.stream) this.fetchCourses();
+    else this.loading = false;
   }
 
   fetchCourses() {
-    this.loading = true; // Ensure loading starts
-
+    this.loading = true;
     this.http.get<any[]>(`http://localhost:5000/api/courses/stream/${this.stream}`)
       .subscribe({
         next: (data) => {
-          console.log("✅ Frontend received courses:", data); // Check console to confirm
           this.courses = data;
-          this.loading = false; // Stop loading
-          this.cd.detectChanges(); // <--- FORCE SCREEN UPDATE
+          this.loading = false;
+          this.cd.detectChanges();
         },
         error: (err) => {
-          console.error("❌ Error loading courses:", err);
-          this.loading = false; // Stop loading even on error
-          this.cd.detectChanges(); // <--- FORCE SCREEN UPDATE
+          console.error(err);
+          this.loading = false;
+          this.cd.detectChanges();
         }
       });
+  }
+  
+  // ✅ Toggle Selection
+  toggleCompare(course: any) {
+    const index = this.selectedCourses.findIndex(c => c.id === course.id);
+    
+    if (index > -1) {
+      // Remove if already selected
+      this.selectedCourses.splice(index, 1);
+    } else {
+      // Add if less than 3
+      if (this.selectedCourses.length < 3) {
+        this.selectedCourses.push(course);
+      } else {
+        alert("You can only compare up to 3 courses at a time!");
+      }
+    }
+  }
+
+  // Helper to check if a card is selected
+  isSelected(course: any): boolean {
+    return this.selectedCourses.some(c => c.id === course.id);
+  }
+
+  openComparison() {
+    this.showCompareModal = true;
+  }
+
+  closeComparison() {
+    this.showCompareModal = false;
   }
 
   goBack() {
