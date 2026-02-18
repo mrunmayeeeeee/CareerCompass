@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionService, Question } from '../../services/question';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
-import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-student-exam',
   standalone: true,
@@ -35,22 +35,27 @@ export class StudentExamComponent implements OnInit {
   }
 
   loadQuestions() {
-    console.log("⚡ Attempting to load questions...");
-
     this.qService.getQuestions().subscribe({
       next: (data) => {
-        console.log("✅ Data received:", data);
-        this.questions = data;
+        // ✅ Shuffle the questions before assigning them
+        this.questions = this.shuffleArray(data);
         this.cd.detectChanges();
+        
         if (this.questions.length === 0) {
-          alert("No questions found in Database! Please ask Admin to add some.");
+          alert("No questions found in Database!");
         }
       },
-      error: (err) => {
-        console.error("❌ Error loading questions:", err);
-        alert("Failed to load questions! Check console for details.");
-      }
+      error: (err) => console.error("❌ Error:", err)
     });
+  }
+
+  // 🎲 Fisher-Yates Shuffle Algorithm (Standard for randomization)
+  shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   selectOption(qId: number, option: string) {
@@ -96,5 +101,14 @@ export class StudentExamComponent implements OnInit {
     );
 
     this.recommendedStream = highest;
+  }
+
+  // ✅ Function moved OUTSIDE of calculateResult
+  retakeTest() {
+    this.showResult = false;
+    this.currentQuestionIndex = 0;
+    this.score = 0;
+    this.userAnswers.clear(); // Clear previous answers
+    this.questions = this.shuffleArray(this.questions); // 🔀 Re-shuffle for new attempt
   }
 }
