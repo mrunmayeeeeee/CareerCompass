@@ -6,14 +6,12 @@
   </header>
 
   <div *ngIf="loading" class="loading">Loading Opportunities...</div>
-
   <div class="cards-grid">
     <div *ngFor="let course of courses" class="course-card">
       <div class="card-header">
         <h3>{{ course.courseName }}</h3>
         <span class="badge">{{ course.durationYears }} Years</span>
       </div>
-      
       <div class="card-body">
         <p><strong>💰 Fees:</strong> {{ course.fees }}</p>
         <p><strong>📋 Eligibility:</strong> {{ course.eligibilityCriteria }}</p>
