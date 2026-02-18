@@ -1,79 +1,108 @@
-/* Container styling */
-.auth-container {
+/* Container styling to center the card */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
   width: 100%;
-  max-width: 100%; /* Allows it to fill the parent container */
-  margin: 0 auto;
-  font-family: 'Segoe UI', sans-serif;
+}
+
+.auth-container {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem 2.5rem;
+  border-radius: 1.5rem; /* Soft rounded corners */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: transform 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* Header Section */
 .header-text {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 2.5rem;
 }
 
 .header-text h2 {
-  font-size: 1.8rem;
-  color: #004085; /* Dark Blue Brand Color */
-  margin-bottom: 8px;
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
 }
 
-.subtitle {
-  color: #666;
+.header-text .subtitle {
   font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* Form Groups */
+/* Form Inputs */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 .input-group {
-  margin-bottom: 20px;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .input-group label {
-  display: block;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 6px;
+  color: #1f2937;
 }
 
-/* Input Fields */
 .form-control {
   width: 100%;
-  padding: 12px 15px;
+  padding: 0.875rem 1rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box; /* Ensures padding doesn't break layout */
-  transition: all 0.3s ease;
-  background-color: #f9f9f9;
+  color: #1f2937;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
 }
 
 .form-control:focus {
-  border-color: #004085; /* Blue Focus Border */
-  background-color: #fff;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 64, 133, 0.1);
+  background-color: #ffffff;
+  border-color: #4f46e5;
+  /* The "Ring" effect */
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
 }
 
-/* Buttons */
+/* Primary Button */
 .btn-primary {
+  margin-top: 1rem;
   width: 100%;
-  padding: 12px;
-  background-color: #004085; /* Dark Blue */
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 0.875rem;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  margin-top: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .btn-primary:hover {
-  background-color: #002752; /* Even Darker Blue on Hover */
-  transform: translateY(-2px);
+  background-color: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
 }
 
 .btn-primary:active {
@@ -82,33 +111,58 @@
 
 /* Error Message */
 .error-box {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  text-align: center;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background-color: #fef2f2;
+  border-radius: 0.5rem;
+  border-left: 4px solid #b91c1c;
+  display: flex;
+  align-items: center;
+}
+
+.error-box span {
+  color: #b91c1c;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 /* Footer Links */
 .auth-footer {
-  margin-top: 20px;
+  margin-top: 2rem;
   text-align: center;
+}
+
+.auth-footer p {
+  color: #6b7280;
   font-size: 0.9rem;
-  color: #555;
-  border-top: 1px solid #eee;
-  padding-top: 15px;
 }
 
-.link {
-  color: #004085;
+.auth-footer .link {
+  color: #4f46e5;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
+  transition: color 0.2s;
 }
 
-.link:hover {
+.auth-footer .link:hover {
+  color: #4338ca;
   text-decoration: underline;
-  color: #ffc107; /* Yellow Accent on Hover */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+    box-shadow: none;
+    background: transparent;
+  }
+  
+  .header-text h2 {
+    font-size: 1.5rem;
+  }
 }
