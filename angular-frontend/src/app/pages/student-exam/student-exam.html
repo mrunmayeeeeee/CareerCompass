@@ -8,8 +8,6 @@
     </div>
   </header>
 
-  <!-- <p style="font-size: 10px; color: gray;">Debug: Loaded {{ questions.length }} questions</p> -->
-
   <div *ngIf="questions.length === 0" class="loading">
     <p>Loading Questions... (Please wait)</p>
   </div>
@@ -83,7 +81,7 @@
       </ul>
     </div>
 
-    <button (click)="showResult = false; currentQuestionIndex = 0; score = 0" class="btn-restart">Retake Test</button>
+    <button (click)="retakeTest()" class="btn-restart">Retake Test</button>
   </div>
 
 </div>
